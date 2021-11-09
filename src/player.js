@@ -1,13 +1,14 @@
 import * as THREE from 'three';
 
 export class Player {
-  constructor(scene, posx, posz) {
+  constructor(scene, chunk, posx, posz) {
     this.scene = scene;
+    this.chunk = chunk;
     this.posx = posx;
     this.posz = posz;
     this.accz = -0.5;
     this.accx = -0.5;
-    this.decn = 0.01;
+    this.decn = 0.005;
     this.velz = 0;
     this.velx = 0;
   }
@@ -32,15 +33,18 @@ export class Player {
 
   }
   move() {
-    this.data.position.z += this.velz;
-    this.data.position.x += this.velx;
-    this.scene.position.z -= this.velz;
-    this.scene.position.x -= this.velx;
-    if(this.velz !== 0){
-      this.velz += this.velz>0?-this.decn:this.decn;
+    if(this.chunk.contains(this.data.position.z + this.velz, this.data.position.x + this.velx)) {
+      this.data.position.z += this.velz;
+      this.data.position.x += this.velx;
+      this.scene.position.z -= this.velz;
+      this.scene.position.x -= this.velx;
+      if(this.velz !== 0){
+        this.velz += this.velz>0?-this.decn:this.decn;
+      }
+      if(this.velx !== 0){
+        this.velx += this.velx>0?-this.decn:this.decn;
+      }
     }
-    if(this.velx !== 0){
-      this.velx += this.velx>0?-this.decn:this.decn;
-    }
+    
   }
 }

@@ -5,7 +5,7 @@ import { Chunk } from './src/chunk';
 import { Player } from './src/player'
 
 const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1024);
+const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 2048);
 const renderer = new THREE.WebGLRenderer({ canvas: document.querySelector('#main') });
 
 renderer.setPixelRatio(window.devicePixelRatio);
@@ -18,9 +18,9 @@ renderer.render(scene, camera);
 //scene.add(gridHelper); 
 const controls = new OrbitControls(camera, renderer.domElement);
 
-const ch = new Chunk(scene, 0, 0, 1024);
-ch.draw();
-const player = new Player(scene, 0, 0);
+const chunk = new Chunk(scene, 0, 0, 1024);
+chunk.draw();
+const player = new Player(scene, chunk, 0, 0);
 player.draw();
 
 
