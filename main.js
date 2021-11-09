@@ -66,7 +66,7 @@ for(let i=0; i<25; i++) {
   qtree.insert(temp);
   points.push(temp);
 }
-qtree.draw();
+//qtree.draw();
 console.log(qtree);
 
 
@@ -89,7 +89,12 @@ function onDocumentKeyDown(event) {
       scene.add(player.sword);
       sword = 10;
       if(Math.sqrt(Math.pow(player.posx-nearby[i].posx,2)+Math.pow(player.posz-nearby[i].posz,2))<=SWORDRANGE){
-        nearby[i].change(Math.random()*1024 - 512, Math.random()*1024 - 512);
+        const id = nearby[i].id;
+        qtree.remove(nearby[i]);
+        scene.remove(nearby[i].data)
+        let newpt = new Point(scene, id, Math.random()*1024 - 512, Math.random()*1024 - 512);
+        qtree.insert(newpt);
+        newpt.draw();
         score++;
       }
     }
