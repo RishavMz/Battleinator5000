@@ -23,7 +23,9 @@ const points = [];
 let nearby = [];
 let score = 0;
 const SWORDRANGE = 15;
+let health = 100;
 let sword = 0;
+document.getElementById('label1').innerHTML= `SCORE : ${score} <br/> HEALTH : ${health}` ;
 
 const chunk = new Chunk(scene, 0, 0, 1024);
 chunk.draw();
@@ -48,6 +50,13 @@ function animate() {
   //    }
   //  }
   //}
+  for(let i=0; i<nearby.length; i++) {
+    nearby[i].move();
+    if((Math.sqrt(Math.pow(player.posx-nearby[i].posx,2)+Math.pow(player.posz-nearby[i].posz,2))<=5)){
+      health -= 1;
+      document.getElementById('label1').innerHTML= `SCORE : ${score} <br/> HEALTH : ${health}` ;
+    }
+  }
   if(sword===0) {
     scene.remove(player.sword);
   } else if(sword>0) {
@@ -61,7 +70,7 @@ function animate() {
 animate();
 
 for(let i=0; i<25; i++) {
-  let temp = new Point(scene, i, Math.random()*1024 - 512, Math.random()*1024 - 512);
+  let temp = new Point(scene, qtree, i, Math.random()*1024 - 512, Math.random()*1024 - 512);
   temp.draw();
   qtree.insert(temp);
   points.push(temp);
@@ -92,11 +101,18 @@ function onDocumentKeyDown(event) {
         const id = nearby[i].id;
         qtree.remove(nearby[i]);
         scene.remove(nearby[i].data)
-        let newpt = new Point(scene, id, Math.random()*1024 - 512, Math.random()*1024 - 512);
+        let newpt = new Point(scene, qtree, id, Math.random()*1024 - 512, Math.random()*1024 - 512);
         qtree.insert(newpt);
         newpt.draw();
         score++;
       }
+    }
+  } else if(keyCode == 84) {
+    let div = document.getElementById('label2');
+    if(div.style.display === 'block') {
+      div.style.display = 'none';
+    } else {
+      div.style.display = 'block';
     }
   }
 }

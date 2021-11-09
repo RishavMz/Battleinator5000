@@ -1,10 +1,11 @@
 import * as THREE from 'three';
 
 export class Point {
-    constructor(scene, id, posx, posz) {
+    constructor(scene, qtree, id, posx, posz) {
         this.posx = posx;
         this.posz = posz;
         this.id = id;
+        this.qtree = qtree;
         this.scene = scene;
     }
     change(posx, posz) {
@@ -23,6 +24,18 @@ export class Point {
     changeRange(){ 
         this.data.position.y = 100;
     }
+    move() {
+        let px = Math.random()*2-1;
+        let pz = Math.random()*2-1; 
+        let temp = new Point(this.scene, this.qtree, this.id, this.posx+px, this.posz+pz);
+        let quad = this.qtree.contains(temp);
+        if(quad && quad.contains(temp)){
+            this.posx = temp.posx;
+            this.posz = temp.posz;
+            this.data.position.x = this.posx;
+            this.data.position.z = this.posz;
+        }
+    }
 }
 
 
@@ -38,9 +51,9 @@ export class QuadTree {
     contains(point) {
         if(point.posx > this.posx - this.side/2 && point.posx < this.posx + this.side/2 &&
             point.posz > this.posz - this.side/2 && point.posz < this.posz + this.side/2){
-                return true;
+                return this;
             }
-        return false;
+        return null;
     }
     squareContains(posx, posz, side, point) {
         let pointdata = point;
