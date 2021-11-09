@@ -21,6 +21,8 @@ export class Player {
     this.playerrange = playerrange;
     player.position.x += this.posx;
     player.position.z += this.posz;
+    playerrange.position.x += this.posx;
+    playerrange.position.z += this.posz;
     this.scene.add(player, playerrange);
   }
   forward() {
@@ -55,6 +57,6 @@ export class Player {
     }
   }
   getNearPoints() {
-    const data = this.quadtree.squareContains(this.posx, this.posz, this.range, []);
+    return this.quadtree.squareContains(this.posx, this.posz, this.range, []);
   }
 }

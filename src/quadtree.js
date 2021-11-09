@@ -6,21 +6,16 @@ export class Point {
         this.posz = posz;
         this.id = id;
         this.scene = scene;
-        this.color = 0xffffff;
     }
     draw() {
-        const pt = new THREE.Mesh(new THREE.SphereGeometry(5, 100, 100), new THREE.MeshBasicMaterial({color: this.color}));
+        const pt = new THREE.Mesh(new THREE.SphereGeometry(5, 100, 100), new THREE.MeshBasicMaterial({color: 0xffffff}));
+        this.data = pt;
         pt.position.x = this.posx;
         pt.position.z = this.posz;
         this.scene.add(pt);
     }
     changeRange(){ 
-        this.color = 0x001122 ;
-        this.draw();
-    }
-    changeBack() { 
-        this.color = 0xffffff ;
-        this.draw();
+        this.data.position.y = 100;
     }
 }
 

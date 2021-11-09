@@ -19,18 +19,33 @@ renderer.render(scene, camera);
 //scene.add(gridHelper); 
 const controls = new OrbitControls(camera, renderer.domElement);
 
+const points = [];
+let nearby = [];
+
 const chunk = new Chunk(scene, 0, 0, 1024);
 chunk.draw();
 
 const qtree = new QuadTree(scene, 0, 0, 1024);
-const points = [];
-const player = new Player(scene, qtree, chunk, 0, 0);
+
+const player = new Player(scene, qtree, chunk, 0, 400);
 player.draw();
 
+let nearbyLookup = 0;
 
 function animate() {
   requestAnimationFrame(animate);
 
+  if(nearbyLookup == 1) {
+    for(let i=0; i<nearby.length; i++) {
+      if(nearby[i].data.position.y >0){
+        nearby[i].data.position.y -= 1;
+      } else {
+        nearbyLookup = 0;
+        break;
+      }
+    }
+  }
+  
   player.move();
   controls.update();
   renderer.render(scene, camera);
@@ -43,7 +58,7 @@ for(let i=0; i<25; i++) {
   qtree.insert(temp);
   points.push(temp);
 }
-qtree.draw();
+//qtree.draw();
 console.log(qtree);
 
 
@@ -61,12 +76,12 @@ function onDocumentKeyDown(event) {
     player.left();
   } else if (keyCode == 68 ) {
     player.right();
+  } else if (keyCode == 32) {
+
   }
 }
 
 function onDocumentKeyUp(event) {
-  for(let i=0; i<25; i++) {
-    points[i].changeBack();
-  }
-  player.getNearPoints();
+  nearby = player.getNearPoints();
+  nearbyLookup = 1;
 }
