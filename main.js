@@ -21,7 +21,10 @@ const controls = new OrbitControls(camera, renderer.domElement);
 
 const chunk = new Chunk(scene, 0, 0, 1024);
 chunk.draw();
-const player = new Player(scene, chunk, 0, 0);
+
+const qtree = new QuadTree(scene, 0, 0, 1024);
+const points = [];
+const player = new Player(scene, qtree, chunk, 0, 0);
 player.draw();
 
 
@@ -34,17 +37,19 @@ function animate() {
 }
 animate();
 
-const qtree = new QuadTree(scene, 0, 0, 1024);
-for(let i=0; i<200; i++) {
-  let temp = new Point(scene, Math.random()*1024 - 512, Math.random()*1024 - 512);
+for(let i=0; i<25; i++) {
+  let temp = new Point(scene, i, Math.random()*1024 - 512, Math.random()*1024 - 512);
   temp.draw();
   qtree.insert(temp);
+  points.push(temp);
 }
-console.log(qtree)
 qtree.draw();
+console.log(qtree);
 
 
 document.addEventListener("keydown", onDocumentKeyDown, false);
+document.addEventListener("keyup", onDocumentKeyUp, false);
+
 function onDocumentKeyDown(event) {
     var keyCode = event.which;
     //console.log(keyCode)
@@ -57,4 +62,11 @@ function onDocumentKeyDown(event) {
   } else if (keyCode == 68 ) {
     player.right();
   }
+}
+
+function onDocumentKeyUp(event) {
+  for(let i=0; i<25; i++) {
+    points[i].changeBack();
+  }
+  player.getNearPoints();
 }

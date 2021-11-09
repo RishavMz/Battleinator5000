@@ -1,16 +1,26 @@
 import * as THREE from 'three';
 
 export class Point {
-    constructor(scene, posx, posz) {
+    constructor(scene, id, posx, posz) {
         this.posx = posx;
         this.posz = posz;
+        this.id = id;
         this.scene = scene;
+        this.color = 0xffffff;
     }
     draw() {
-        const pt = new THREE.Mesh(new THREE.SphereGeometry(2, 100, 100), new THREE.MeshBasicMaterial({color: 0xffffff}));
+        const pt = new THREE.Mesh(new THREE.SphereGeometry(5, 100, 100), new THREE.MeshBasicMaterial({color: this.color}));
         pt.position.x = this.posx;
         pt.position.z = this.posz;
         this.scene.add(pt);
+    }
+    changeRange(){ 
+        this.color = 0x001122 ;
+        this.draw();
+    }
+    changeBack() { 
+        this.color = 0xffffff ;
+        this.draw();
     }
 }
 
@@ -31,12 +41,28 @@ export class QuadTree {
             }
         return false;
     }
+    squareContains(posx, posz, side, point) {
+        let pointdata = point;
+        if(!(this.posx-this.side/2 > posx+side/2 || 
+            this.posx+this.side/2 < posx-side/2 || 
+            this.posz-this.side/2 > posz+side/2 ||
+            this.posz+this.side/2 < posz-side/2)) {
+                this.points.forEach(e => {    pointdata.push(e[0]); e[0].changeRange(); });
+                if(this.northeast){ this.northeast.squareContains(posx, posz, side, pointdata); }
+                if(this.northwest){ this.northwest.squareContains(posx, posz, side, pointdata); }
+                if(this.southeast){ this.southeast.squareContains(posx, posz, side, pointdata); }
+                if(this.southwest){ this.southwest.squareContains(posx, posz, side, pointdata); }
+                //if(! this.northeast) {                 
+                //    this.points.forEach(e => {    pointdata.push(e[0]); e[0].changeRange(); });
+                //}
+            }
+        return pointdata;
+    }
     draw() {
         let box = new THREE.Mesh(new THREE.BoxGeometry(this.side, this.side/10, this.side), new THREE.MeshBasicMaterial({color:0xffffff, wireframe: true}));
         box.position.x = this.posx;
         box.position.z = this.posz;
         this.scene.add(box);
-        console.log(this.posx, this.posz, this.side)
         if(this.northeast) {
             this.northeast.draw();
         }if(this.northwest) {
