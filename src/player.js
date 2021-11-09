@@ -23,7 +23,9 @@ export class Player {
     player.position.z += this.posz;
     playerrange.position.x += this.posx;
     playerrange.position.z += this.posz;
-    this.scene.add(player, playerrange);
+    this.scene.position.z -= this.posz;
+    this.scene.position.x -= this.posx;
+    this.scene.add(player);
   }
   forward() {
     this.velz = this.accz;

@@ -29,9 +29,9 @@ export class QuadTree {
         this.points = [];
         this.limit = 3;
     }
-    contains(posx, posz) {
-        if(posx > this.posx - this.side/2 && this.posx < this.posx + this.side/2 &&
-            posz > this.posz - this.side/2 && posz < this.posz + this.side/2){
+    contains(point) {
+        if(point.posx > this.posx - this.side/2 && point.posx < this.posx + this.side/2 &&
+            point.posz > this.posz - this.side/2 && point.posz < this.posz + this.side/2){
                 return true;
             }
         return false;
@@ -42,7 +42,7 @@ export class QuadTree {
             this.posx+this.side/2 < posx-side/2 || 
             this.posz-this.side/2 > posz+side/2 ||
             this.posz+this.side/2 < posz-side/2)) {
-                this.points.forEach(e => {    pointdata.push(e[0]); e[0].changeRange(); });
+                this.points.forEach(e => {    pointdata.push(e); e.changeRange(); });
                 if(this.northeast){ this.northeast.squareContains(posx, posz, side, pointdata); }
                 if(this.northwest){ this.northwest.squareContains(posx, posz, side, pointdata); }
                 if(this.southeast){ this.southeast.squareContains(posx, posz, side, pointdata); }
@@ -69,9 +69,9 @@ export class QuadTree {
         }
     }
     insert(point) {
-        if(this.contains(point.posx, point.posz)) {
+        if(this.contains(point)) {
             if(this.points.length <= this.limit) {
-                this.points.push([point]);
+                this.points.push(point);
             } else {
                 if(this.northwest === undefined){
                     this.northwest = new QuadTree(this.scene, (this.posx - this.side/4), (this.posz - this.side/4) ,this.side/2);
@@ -79,15 +79,44 @@ export class QuadTree {
                     this.southwest = new QuadTree(this.scene, (this.posx - this.side/4), (this.posz + this.side/4) ,this.side/2);
                     this.southeast = new QuadTree(this.scene, (this.posx + this.side/4), (this.posz + this.side/4) ,this.side/2);
                 }
-                if(this.northeast.contains(point.posx, point.posz)) {
+                if(this.northeast.contains(point)) {
                     this.northeast.insert(point);
-                }else if(this.northwest.contains(point.posx, point.posz)) {
+                }else if(this.northwest.contains(point)) {
                     this.northwest.insert(point);
-                }else if(this.southeast.contains(point.posx, point.posz)) {
+                }else if(this.southeast.contains(point)) {
                     this.southeast.insert(point);
-                }else if(this.southwest.contains(point.posx, point.posz)) {
+                }else if(this.southwest.contains(point)) {
                     this.southwest.insert(point);
                 }
+            }
+        }
+    }
+    remove(point){
+        if(this.contains(point)){
+            let tempval = -1;
+            for(let i=0; i<this.points.length; i++){
+                console.log(this.points[i].id, point.id)
+                if(this.points[i].id == point.id){
+                    tempval = i;
+                    break;
+                }
+            }
+            if(tempval == -1) {
+                if(this.northeast){
+                    this.northeast.remove(point);
+                    this.northwest.remove(point);
+                    this.southeast.remove(point);
+                    this.southwest.remove(point);
+                }
+                if(this.northeast && this.northeast.points.length === 0 && this.northwest.points.length === 0 &&this.southeast.points.length === 0 && this.southwest.points.length === 0  ){
+                    this.northeast = null;
+                    this.northwest = null;
+                    this.southeast = null;
+                    this.southwest = null;
+                }
+            }
+            else {
+                this.points.splice(tempval, 1);
             }
         }
     }

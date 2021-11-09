@@ -11,8 +11,8 @@ const renderer = new THREE.WebGLRenderer({ canvas: document.querySelector('#main
 
 renderer.setPixelRatio(window.devicePixelRatio);
 renderer.setSize(window.innerWidth, window.innerHeight);
-camera.position.setZ(0);
-camera.position.setY(1000);
+camera.position.setZ(200);
+camera.position.setY(1005);
 renderer.render(scene, camera);
 
 //const gridHelper = new THREE.GridHelper(1000,1000);
@@ -58,7 +58,7 @@ for(let i=0; i<25; i++) {
   qtree.insert(temp);
   points.push(temp);
 }
-//qtree.draw();
+qtree.draw();
 console.log(qtree);
 
 
@@ -84,4 +84,11 @@ function onDocumentKeyDown(event) {
 function onDocumentKeyUp(event) {
   nearby = player.getNearPoints();
   nearbyLookup = 1;
+  let temp = points[points.length-1];
+  qtree.remove(temp);
+  scene.remove(temp.data);
+  //console.log(temp.data)
+  temp = null;
+  points.pop(points.length -1);
+  console.log(qtree)
 }
