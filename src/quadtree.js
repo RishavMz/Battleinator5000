@@ -57,6 +57,7 @@ export class QuadTree {
         let box = new THREE.Mesh(new THREE.BoxGeometry(this.side, this.side/10, this.side), new THREE.MeshBasicMaterial({color:0xffffff, wireframe: true}));
         box.position.x = this.posx;
         box.position.z = this.posz;
+        this.data = box;
         this.scene.add(box);
         if(this.northeast) {
             this.northeast.draw();
@@ -95,7 +96,6 @@ export class QuadTree {
         if(this.contains(point)){
             let tempval = -1;
             for(let i=0; i<this.points.length; i++){
-                console.log(this.points[i].id, point.id)
                 if(this.points[i].id == point.id){
                     tempval = i;
                     break;
@@ -109,6 +109,10 @@ export class QuadTree {
                     this.southwest.remove(point);
                 }
                 if(this.northeast && this.northeast.points.length === 0 && this.northwest.points.length === 0 &&this.southeast.points.length === 0 && this.southwest.points.length === 0  ){
+                    this.scene.remove(this.northeast.data)
+                    this.scene.remove(this.northwest.data)
+                    this.scene.remove(this.southeast.data)
+                    this.scene.remove(this.southwest.data)
                     this.northeast = null;
                     this.northwest = null;
                     this.southeast = null;

@@ -82,13 +82,11 @@ function onDocumentKeyDown(event) {
 }
 
 function onDocumentKeyUp(event) {
-  nearby = player.getNearPoints();
-  nearbyLookup = 1;
+  //nearby = player.getNearPoints();
+  //nearbyLookup = 1;
   let temp = points[points.length-1];
   qtree.remove(temp);
   scene.remove(temp.data);
-  //console.log(temp.data)
   temp = null;
   points.pop(points.length -1);
-  console.log(qtree)
 }
