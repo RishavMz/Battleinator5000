@@ -14,10 +14,12 @@ export class Player {
   }
   draw() {
     const player = new THREE.Mesh(new THREE.SphereGeometry(1, 100, 100), new THREE.MeshBasicMaterial({color: 0xffffff}));
+    const playerrange = new THREE.Mesh(new THREE.BoxGeometry(128, 10, 128, 10, 10, 10), new THREE.MeshBasicMaterial({color: 0x90EE90, wireframe: true}));
     this.data = player;
+    this.playerrange = playerrange;
     player.position.x += this.posx;
     player.position.z += this.posz;
-    this.scene.add(player);
+    this.scene.add(player, playerrange);
   }
   forward() {
     this.velz = this.accz;
@@ -36,6 +38,8 @@ export class Player {
     if(this.chunk.contains(this.data.position.z + this.velz, this.data.position.x + this.velx)) {
       this.data.position.z += this.velz;
       this.data.position.x += this.velx;
+      this.playerrange.position.z += this.velz;
+      this.playerrange.position.x += this.velx;
       this.scene.position.z -= this.velz;
       this.scene.position.x -= this.velx;
       if(this.velz !== 0){
