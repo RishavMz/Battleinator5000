@@ -17,12 +17,16 @@ export class Player {
   draw() {
     const player = new THREE.Mesh(new THREE.SphereGeometry(1, 100, 100), new THREE.MeshBasicMaterial({color: 0xffffff}));
     const playerrange = new THREE.Mesh(new THREE.BoxGeometry(this.range, 10, this.range, 5, 5, 5), new THREE.MeshBasicMaterial({color: 0x90EE90, wireframe: true}));
+    const sword = new THREE.Mesh(new THREE.SphereGeometry(7.5, 100, 50), new THREE.MeshBasicMaterial({color: 0xffffff, wireframe: true}));
     this.data = player;
     this.playerrange = playerrange;
+    this.sword = sword;
     player.position.x += this.posx;
     player.position.z += this.posz;
     playerrange.position.x += this.posx;
     playerrange.position.z += this.posz;
+    sword.position.x += this.posx;
+    sword.position.z += this.posz;
     this.scene.position.z -= this.posz;
     this.scene.position.x -= this.posx;
     this.scene.add(player);
@@ -48,6 +52,8 @@ export class Player {
       this.posz += this.velz;
       this.playerrange.position.z += this.velz;
       this.playerrange.position.x += this.velx;
+      this.sword.position.z += this.velz;
+      this.sword.position.x += this.velx;
       this.scene.position.z -= this.velz;
       this.scene.position.x -= this.velx;
       if(this.velz !== 0){
@@ -61,4 +67,5 @@ export class Player {
   getNearPoints() {
     return this.quadtree.squareContains(this.posx, this.posz, this.range, []);
   }
+  
 }

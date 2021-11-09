@@ -7,6 +7,12 @@ export class Point {
         this.id = id;
         this.scene = scene;
     }
+    change(posx, posz) {
+        this.posx = posx;
+        this.posz = posz;
+        this.data.position.x = this.posx;
+        this.data.position.z = this.posz;
+    }
     draw() {
         const pt = new THREE.Mesh(new THREE.SphereGeometry(5, 100, 100), new THREE.MeshBasicMaterial({color: 0xffffff}));
         this.data = pt;
@@ -42,7 +48,7 @@ export class QuadTree {
             this.posx+this.side/2 < posx-side/2 || 
             this.posz-this.side/2 > posz+side/2 ||
             this.posz+this.side/2 < posz-side/2)) {
-                this.points.forEach(e => {    pointdata.push(e); e.changeRange(); });
+                this.points.forEach(e => {    pointdata.push(e); /*e.changeRange();*/ });
                 if(this.northeast){ this.northeast.squareContains(posx, posz, side, pointdata); }
                 if(this.northwest){ this.northwest.squareContains(posx, posz, side, pointdata); }
                 if(this.southeast){ this.southeast.squareContains(posx, posz, side, pointdata); }
