@@ -20,6 +20,8 @@
   z-index: 11;
   border-radius: 20px;
   display: block;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+
 }
 .label2 {
   position: fixed;

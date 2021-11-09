@@ -19,7 +19,6 @@ renderer.render(scene, camera);
 //scene.add(gridHelper); 
 const controls = new OrbitControls(camera, renderer.domElement);
 
-const points = [];
 let nearby = [];
 let score = 0;
 const SWORDRANGE = 15;
@@ -35,21 +34,10 @@ const qtree = new QuadTree(scene, 0, 0, 1024);
 const player = new Player(scene, qtree, chunk, 0, 400);
 player.draw();
 
-//let nearbyLookup = 0;
 
 function animate() {
   requestAnimationFrame(animate);
 
-  //if(nearbyLookup == 1) {
-  //  for(let i=0; i<nearby.length; i++) {
-  //    if(nearby[i].data.position.y >0){
-  //      nearby[i].data.position.y -= 1;
-  //    } else {
-  //      nearbyLookup = 0;
-  //      break;
-  //    }
-  //  }
-  //}
   for(let i=0; i<nearby.length; i++) {
     nearby[i].move();
     if((Math.sqrt(Math.pow(player.posx-nearby[i].posx,2)+Math.pow(player.posz-nearby[i].posz,2))<=5)){
@@ -73,9 +61,8 @@ for(let i=0; i<25; i++) {
   let temp = new Point(scene, qtree, i, Math.random()*1024 - 512, Math.random()*1024 - 512);
   temp.draw();
   qtree.insert(temp);
-  points.push(temp);
 }
-//qtree.draw();
+qtree.draw();
 console.log(qtree);
 
 
@@ -105,6 +92,8 @@ function onDocumentKeyDown(event) {
         qtree.insert(newpt);
         newpt.draw();
         score++;
+        document.getElementById('label1').innerHTML= `SCORE : ${score} <br/> HEALTH : ${health}` ;
+        qtree.draw()
       }
     }
   } else if(keyCode == 84) {
@@ -119,10 +108,4 @@ function onDocumentKeyDown(event) {
 
 function onDocumentKeyUp(event) {
   nearby = player.getNearPoints();
-  //nearbyLookup = 1;
-  //let temp = points[points.length-1];
-  //qtree.remove(temp);
-  //scene.remove(temp.data);
-  //temp = null;
-  //points.pop(points.length -1);
 }

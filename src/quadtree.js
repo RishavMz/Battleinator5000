@@ -8,21 +8,12 @@ export class Point {
         this.qtree = qtree;
         this.scene = scene;
     }
-    change(posx, posz) {
-        this.posx = posx;
-        this.posz = posz;
-        this.data.position.x = this.posx;
-        this.data.position.z = this.posz;
-    }
     draw() {
         const pt = new THREE.Mesh(new THREE.SphereGeometry(5, 100, 100), new THREE.MeshBasicMaterial({color: 0xffffff}));
         this.data = pt;
         pt.position.x = this.posx;
         pt.position.z = this.posz;
         this.scene.add(pt);
-    }
-    changeRange(){ 
-        this.data.position.y = 100;
     }
     move() {
         let px = Math.random()*2-1;
