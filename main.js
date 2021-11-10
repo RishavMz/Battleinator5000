@@ -24,7 +24,7 @@ let score = 0;
 let health = 100;
 let weapon = 0;
 let pointanimate = 0;
-const ENV = 'dev';
+const ENV = 'prod';
 
 document.getElementById('label1').innerHTML= `SCORE : ${score} <br/> HEALTH : ${health}` ;
 document.getElementById(`item0`).style.borderColor="gold";

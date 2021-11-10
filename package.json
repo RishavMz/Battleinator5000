@@ -1,5 +1,5 @@
 {
-  "name": "game",
+  "name": "3dbattlearena",
   "version": "0.0.0",
   "scripts": {
     "dev": "vite",
@@ -12,5 +12,9 @@
   },
   "dependencies": {
     "three": "^0.134.0"
+  },
+  "author": "Rishav Mazumdar",
+  "bugs": {
+    "url": "https://github.com/RishavMz/3D_Battle_Arena/issues"
   }
 }
