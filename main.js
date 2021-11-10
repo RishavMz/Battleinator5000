@@ -52,6 +52,13 @@ function animate() {
       }
     }
   }
+  if(pointanimate%15 == 0){
+    player.leg1.rotation.x = (player.leg1.rotation.x+0.1)%0.4;
+    player.leg2.rotation.x = (player.leg1.rotation.x+0.1)%0.4;
+    player.body.rotation.y = (player.body.rotation.y+0.1)%0.2-0.2;
+
+  }
+  
   
   if(weapon===0) {
     scene.remove(player.weapons[player.weapon].tool);
@@ -65,7 +72,7 @@ function animate() {
 }
 animate();
 
-for(let i=0; i<25; i++) {
+for(let i=0; i<20; i++) {
   let temp = new Point(scene, qtree, i, Math.random()*1024 - 512, Math.random()*1024 - 512);
   temp.draw();
   qtree.insert(temp);
@@ -83,7 +90,7 @@ document.addEventListener("keyup", onDocumentKeyUp, false);
 
 function onDocumentKeyDown(event) {
     var keyCode = event.which;
-    console.log(keyCode)
+    //console.log(keyCode)
   if (keyCode == 87 ) { 
     player.forward();        
   } else if (keyCode == 83 ) {
