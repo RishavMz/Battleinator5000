@@ -102,15 +102,19 @@ export class Player {
   }
   forward() {
     this.velz = this.accz;
+    this.player.rotation.y = THREE.Math.degToRad(180);
   }
   backward() {
     this.velz = -this.accz;
+    this.player.rotation.y = THREE.Math.degToRad(0);
   }
   left() {
     this.velx = this.accx;
+    this.player.rotation.y = THREE.Math.degToRad(-90);
   }
   right() {
     this.velx = -this.accx;
+    this.player.rotation.y = THREE.Math.degToRad(90);
 
   }
   move() {

@@ -46,7 +46,7 @@ function animate() {
   if(pointanimate%10 == 0){
     for(let i=0; i<nearby.length; i++) {
       nearby[i].move();
-      if((Math.sqrt(Math.pow(player.posx-nearby[i].posx,2)+Math.pow(player.posz-nearby[i].posz,2))<=5)){
+      if((Math.sqrt(Math.pow(player.posx-nearby[i].posx,2)+Math.pow(player.posz-nearby[i].posz,2))<=10)){
         health -= 1;
         document.getElementById('label1').innerHTML= `SCORE : ${score} <br/> HEALTH : ${health}` ;
       }

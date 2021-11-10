@@ -54,8 +54,12 @@ export class Point {
         this.scene.add(this.data);
     }
     move() {
-        let px = Math.random()*2-1;
-        let pz = Math.random()*2-1; 
+        let px = Math.random()*4-2;
+        let pz = Math.random()*4-2; 
+        let rotator = Math.floor(Math.random()*16);
+        if(rotator===0 || rotator===2 || rotator===4 || rotator===4) {
+            this.data.rotation.y = THREE.Math.degToRad(90*(rotator/2 - 1));
+        }
         let temp = new Point(this.scene, this.qtree, this.id, this.posx+px, this.posz+pz);
         let quad = this.qtree.contains(temp);
         if(quad && quad.contains(temp)){
