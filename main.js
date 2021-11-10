@@ -4,6 +4,7 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { Chunk } from './src/chunk';
 import { Player } from './src/player';
 import { Point, QuadTree } from './src/quadtree';
+import { Tree, Grass } from './src/objects';
 
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 2048);
@@ -25,6 +26,8 @@ let health = 100;
 let weapon = 0;
 let pointanimate = 0;
 const ENV = 'prod';
+const TREE_COUNT = 10;
+const ENEMY_COUNT = 20;
 
 document.getElementById('label1').innerHTML= `SCORE : ${score} <br/> HEALTH : ${health}` ;
 document.getElementById(`item0`).style.borderColor="gold";
@@ -72,11 +75,21 @@ function animate() {
 }
 animate();
 
-for(let i=0; i<20; i++) {
+for(let i=0; i<TREE_COUNT; i++) {
+  let tree = new Tree(scene, Math.random()*1024 - 512, Math.random()*1024 - 512);
+  tree.draw();
+}
+for(let i=0; i<TREE_COUNT; i++) {
+  let tree = new Grass(scene, Math.random()*1024 - 512, Math.random()*1024 - 512);
+  tree.draw();
+}
+
+for(let i=0; i<ENEMY_COUNT; i++) {
   let temp = new Point(scene, qtree, i, Math.random()*1024 - 512, Math.random()*1024 - 512);
   temp.draw();
   qtree.insert(temp);
 }
+
 if(ENV === 'dev'){
   qtree.draw();
   console.log(qtree);
