@@ -24,9 +24,11 @@ let score = 0;
 let health = 100;
 let weapon = 0;
 let pointanimate = 0;
-const ENV = 'prod';
+const ENV = 'dev';
 
 document.getElementById('label1').innerHTML= `SCORE : ${score} <br/> HEALTH : ${health}` ;
+document.getElementById(`item0`).style.borderColor="gold";
+
 
 const chunk = new Chunk(scene, 0, 0, 1024);
 chunk.draw();
@@ -81,7 +83,7 @@ document.addEventListener("keyup", onDocumentKeyUp, false);
 
 function onDocumentKeyDown(event) {
     var keyCode = event.which;
-    //console.log(keyCode)
+    console.log(keyCode)
   if (keyCode == 87 ) { 
     player.forward();        
   } else if (keyCode == 83 ) {
@@ -93,7 +95,7 @@ function onDocumentKeyDown(event) {
   } else if (keyCode == 32) {
     for(let i=0; i<nearby.length; i++) {
       scene.add(player.weapons[player.weapon].tool);
-      weapon = 10;
+      weapon = 2;
       if(Math.sqrt(Math.pow(player.posx-nearby[i].posx,2)+Math.pow(player.posz-nearby[i].posz,2))<=player.weapons[player.weapon].range){
         const id = nearby[i].id;
         qtree.remove(nearby[i]);
@@ -108,8 +110,14 @@ function onDocumentKeyDown(event) {
         }
       }
     }
+  } else if(keyCode == 69) {
+    document.getElementById(`item${player.weapon}`).style.borderColor="black";
+    player.changeWeapon(-1);  
+    document.getElementById(`item${player.weapon}`).style.borderColor="gold";
   } else if(keyCode == 82) {
-    player.changeWeapon();
+    document.getElementById(`item${player.weapon}`).style.borderColor="black";
+    player.changeWeapon(1);
+    document.getElementById(`item${player.weapon}`).style.borderColor="gold";
   } else if(keyCode == 84) {
     let div = document.getElementById('label2');
     if(div.style.display === 'block') {
@@ -129,6 +137,7 @@ let stateCheck = setInterval(() => {
      clearInterval(stateCheck); 
       document.getElementById('label1').style.display='block';
       document.getElementById('label2').style.display='block';
+      document.getElementById('inventory').style.display='block';
       document.getElementById('loader').style.display='none';
     } 
   }, 100);  
@@ -137,3 +146,4 @@ let stateCheck = setInterval(() => {
   if(ENV === 'dev'){
     javascript:(function(){var script=document.createElement('script');script.onload=function(){var stats=new Stats();document.body.appendChild(stats.dom);requestAnimationFrame(function loop(){stats.update();requestAnimationFrame(loop)});};script.src='//mrdoob.github.io/stats.js/build/stats.min.js';document.head.appendChild(script);})()
   }
+

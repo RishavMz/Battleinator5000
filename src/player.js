@@ -1,15 +1,21 @@
 import * as THREE from 'three';
 
-class Blast{
+class Sword{
   constructor(){
     this.tool = new THREE.Mesh(new THREE.SphereGeometry(7.5, 100, 50), new THREE.MeshBasicMaterial({color: 0xffffff, wireframe: true}));
-    this.range = 15;
+    this.range = 14;
   }
 }
-class GroundBlast{
+class Axe{
   constructor(){
-    this.tool = new THREE.Mesh(new THREE.CylinderGeometry(12, 12, 2, 100 ), new THREE.MeshBasicMaterial({color: 0xffffff, wireframe: true}));
-    this.range = 18
+    this.tool = new THREE.Mesh(new THREE.CylinderGeometry(12, 12, 3, 100 ), new THREE.MeshBasicMaterial({color: 0xffffff, wireframe: true}));
+    this.range = 17
+  }
+}
+class Polearm{
+  constructor(){
+    this.tool = new THREE.Mesh(new THREE.CylinderGeometry(15, 12, 1, 100 ), new THREE.MeshBasicMaterial({color: 0xffffff, wireframe: true}));
+    this.range = 20
   }
 }
 
@@ -30,9 +36,10 @@ export class Player {
     this.player = new THREE.Mesh(new THREE.SphereGeometry(1, 100, 100), new THREE.MeshBasicMaterial({color: 0xffffff}));
     this.playerrange = new THREE.Mesh(new THREE.BoxGeometry(this.range, 10, this.range, 5, 5, 5), new THREE.MeshBasicMaterial({color: 0x7bff00, wireframe: true}));
 
-    const w1 = new Blast();
-    const w2 = new GroundBlast();
-    this.weapons = [w1, w2];
+    const w1 = new Sword();
+    const w2 = new Axe();
+    const w3 = new Polearm();
+    this.weapons = [w1, w2, w3];
     this.weapon = 0;
     this.scene.add(this.player);
 
@@ -82,8 +89,12 @@ export class Player {
   getNearPoints() {
     return this.quadtree.squareContains(this.posx, this.posz, this.range, []);
   }
-  changeWeapon() {
-    this.weapon = (this.weapon+1)%this.weapons.length;
+  changeWeapon(data) {
+    this.weapon = (this.weapon+data)%this.weapons.length;
+    if(this.weapon<0){
+      this.weapon = this.weapons.length+this.weapon;
+    }
+    console.log(this.weapon);
   }
   
 }

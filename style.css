@@ -26,7 +26,7 @@
 .label2 {
   position: fixed;
   background-image: url("resources/paper.png");
-  height: 300px;
+  height: 350px;
   width: 500px;
   font-size: 14pt;
   top: 0px;
@@ -65,4 +65,27 @@
 @keyframes spinner {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
+}
+
+.inventory{
+  background-color: silver;
+  position: fixed;
+  bottom: 10px;
+  height: 80px;
+  z-index: 11;
+  margin-left: 25%;
+  margin-right: 25%;
+  width: 50%;
+  display: none;
+}
+.invitem{
+  display: inline-block;
+  height: 50px;
+  width: 50px;
+  padding: 10px 10px 10px 10px;
+}
+.invimg{
+  height: 50px;
+  width: 50px;
+  border: 5px solid black;
 }

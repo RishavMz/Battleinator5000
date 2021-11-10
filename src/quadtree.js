@@ -90,14 +90,11 @@ export class QuadTree {
             this.posx+this.side/2 < posx-side/2 || 
             this.posz-this.side/2 > posz+side/2 ||
             this.posz+this.side/2 < posz-side/2)) {
-                this.points.forEach(e => {    pointdata.push(e); /*e.changeRange();*/ });
+                this.points.forEach(e => {    pointdata.push(e); });
                 if(this.northeast){ this.northeast.squareContains(posx, posz, side, pointdata); }
                 if(this.northwest){ this.northwest.squareContains(posx, posz, side, pointdata); }
                 if(this.southeast){ this.southeast.squareContains(posx, posz, side, pointdata); }
                 if(this.southwest){ this.southwest.squareContains(posx, posz, side, pointdata); }
-                //if(! this.northeast) {                 
-                //    this.points.forEach(e => {    pointdata.push(e[0]); e[0].changeRange(); });
-                //}
             }
         return pointdata;
     }
