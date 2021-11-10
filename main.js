@@ -11,8 +11,8 @@ const renderer = new THREE.WebGLRenderer({ canvas: document.querySelector('#main
 
 renderer.setPixelRatio(window.devicePixelRatio);
 renderer.setSize(window.innerWidth, window.innerHeight);
-camera.position.setZ(10);
-camera.position.setY(5);
+camera.position.setZ(20);
+camera.position.setY(10);
 renderer.render(scene, camera);
 
 //const gridHelper = new THREE.GridHelper(1000,1000);
@@ -24,6 +24,8 @@ let score = 0;
 const SWORDRANGE = 15;
 let health = 100;
 let sword = 0;
+let pointanimate = 0;
+
 document.getElementById('label1').innerHTML= `SCORE : ${score} <br/> HEALTH : ${health}` ;
 
 const chunk = new Chunk(scene, 0, 0, 1024);
@@ -38,13 +40,17 @@ player.draw();
 function animate() {
   requestAnimationFrame(animate);
 
-  for(let i=0; i<nearby.length; i++) {
-    nearby[i].move();
-    if((Math.sqrt(Math.pow(player.posx-nearby[i].posx,2)+Math.pow(player.posz-nearby[i].posz,2))<=5)){
-      health -= 1;
-      document.getElementById('label1').innerHTML= `SCORE : ${score} <br/> HEALTH : ${health}` ;
+  pointanimate = (pointanimate+1)%100;
+  if(pointanimate%10 == 0){
+    for(let i=0; i<nearby.length; i++) {
+      nearby[i].move();
+      if((Math.sqrt(Math.pow(player.posx-nearby[i].posx,2)+Math.pow(player.posz-nearby[i].posz,2))<=5)){
+        health -= 1;
+        document.getElementById('label1').innerHTML= `SCORE : ${score} <br/> HEALTH : ${health}` ;
+      }
     }
   }
+  
   if(sword===0) {
     scene.remove(player.sword);
   } else if(sword>0) {

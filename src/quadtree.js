@@ -13,34 +13,35 @@ export class Point {
         const head_img = texture.load('../resources/head.png');
         const body_img = texture.load('../resources/body.png');
         const limb_img = texture.load('../resources/limb.png');
+        const metal_img = texture.load('../resources/metal.png');
 
         const head = new THREE.Mesh(new THREE.SphereGeometry(1.5, 100, 100), new THREE.MeshBasicMaterial({map: head_img}));
         const body = new THREE.Mesh(new THREE.CylinderGeometry(2, 1, 5, 100,100, false), new THREE.MeshBasicMaterial({map: body_img}));
         const neck = new THREE.Mesh(new THREE.SphereGeometry(2, 100, 100,0, 720, 0, 1), new THREE.MeshBasicMaterial({map: head_img}));
-        const hand11 = new THREE.Mesh(new THREE.CylinderGeometry(0.5, 0.3, 3, 100,100, false), new THREE.MeshBasicMaterial({map: limb_img}));
-        const hand12 = new THREE.Mesh(new THREE.CylinderGeometry(0.2, 0.3, 3, 100,100, false), new THREE.MeshBasicMaterial({map: limb_img}));
-        const hand21 = new THREE.Mesh(new THREE.CylinderGeometry(0.3, 0.5, 3, 100,100, false), new THREE.MeshBasicMaterial({map: limb_img}));
-        const hand22 = new THREE.Mesh(new THREE.CylinderGeometry(0.2, 0.3, 3, 100,100, false), new THREE.MeshBasicMaterial({map: limb_img}));
-        const skirt = new THREE.Mesh(new THREE.CylinderGeometry(1, 3, 3, 100,100, false), new THREE.MeshBasicMaterial({color: 0xfacdea}));
-        const leg1 = new THREE.Mesh(new THREE.CylinderGeometry(0.5, 0.3, 3, 100,100, false), new THREE.MeshBasicMaterial({map: limb_img}));
-        const leg2 = new THREE.Mesh(new THREE.CylinderGeometry(0.5, 0.3, 3, 100,100, false), new THREE.MeshBasicMaterial({map: limb_img}));
-        hand11.position.x = 2.3;
-        hand11.position.y = 2.2;
-        hand12.position.y = 2.2;
+        const hand11 = new THREE.Mesh(new THREE.CylinderGeometry(0.5, 0.3, 4, 100,100, false), new THREE.MeshBasicMaterial({map: limb_img}));
+        const hand12 = new THREE.Mesh(new THREE.CylinderGeometry(0, 0.3, 5, 100,100, false), new THREE.MeshBasicMaterial({map: metal_img}));
+        const hand21 = new THREE.Mesh(new THREE.CylinderGeometry(0.5, 0.3, 4, 100,100, false), new THREE.MeshBasicMaterial({map: limb_img}));
+        const hand22 = new THREE.Mesh(new THREE.CylinderGeometry(0, 0.3, 5, 100,100, false), new THREE.MeshBasicMaterial({map: metal_img}));
+        const skirt = new THREE.Mesh(new THREE.CylinderGeometry(1, 1.8, 3, 100,100, false), new THREE.MeshBasicMaterial( {map: metal_img}));
+        const leg1 = new THREE.Mesh(new THREE.CylinderGeometry(0.5, 0.3, 5, 100,100, false), new THREE.MeshBasicMaterial({map: metal_img}));
+        const leg2 = new THREE.Mesh(new THREE.CylinderGeometry(0.5, 0.3, 5, 100,100, false), new THREE.MeshBasicMaterial({map: metal_img}));
+        hand11.position.x = 3;
+        hand11.position.y = 0.8;
+        hand12.position.y = -0.5;
         hand12.position.z = 1.3;
-        hand12.position.x = 3.5;
-        hand21.position.x = -2.3;
-        hand21.position.y = 2.2;
-        hand22.position.y = 2.2;
+        hand12.position.x = 4.5;
+        hand21.position.x = -3;
+        hand21.position.y = 0.8;
+        hand22.position.y = -0.8;
         hand22.position.z = 1.3;
-        hand22.position.x = -3.5;
-        hand11.rotation.z = THREE.Math.degToRad(90);
+        hand22.position.x = -4.5;
+        hand11.rotation.z = THREE.Math.degToRad(45);
         hand12.rotation.x = THREE.Math.degToRad(90);
-        hand21.rotation.z = THREE.Math.degToRad(90);
+        hand21.rotation.z = THREE.Math.degToRad(-45);
         hand22.rotation.x = THREE.Math.degToRad(90);
         skirt.position.y = -2.5;
-        leg1.position.y = -5;
-        leg2.position.y = -5;
+        leg1.position.y = -6;
+        leg2.position.y = -6;
         leg1.position.x = 1;
         leg2.position.x = -1;
         neck.position.y = 1;
@@ -74,7 +75,7 @@ export class QuadTree {
         this.side = side;
         this.scene = scene;
         this.points = [];
-        this.limit = 3;
+        this.limit = 1;
     }
     contains(point) {
         if(point.posx > this.posx - this.side/2 && point.posx < this.posx + this.side/2 &&
