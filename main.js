@@ -109,3 +109,12 @@ function onDocumentKeyDown(event) {
 function onDocumentKeyUp(event) {
   nearby = player.getNearPoints();
 }
+
+let stateCheck = setInterval(() => { 
+  if (document. readyState === 'complete') {
+     clearInterval(stateCheck); 
+      document.getElementById('label1').style.display='block';
+      document.getElementById('label2').style.display='block';
+      document.getElementById('loader').style.display='none';
+    } 
+  }, 100);  
