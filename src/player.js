@@ -1,5 +1,18 @@
 import * as THREE from 'three';
 
+class Blast{
+  constructor(){
+    this.tool = new THREE.Mesh(new THREE.SphereGeometry(7.5, 100, 50), new THREE.MeshBasicMaterial({color: 0xffffff, wireframe: true}));
+    this.range = 15;
+  }
+}
+class GroundBlast{
+  constructor(){
+    this.tool = new THREE.Mesh(new THREE.CylinderGeometry(12, 12, 2, 100 ), new THREE.MeshBasicMaterial({color: 0xffffff, wireframe: true}));
+    this.range = 18
+  }
+}
+
 export class Player {
   constructor(scene, quadtree, chunk, posx, posz) {
     this.scene = scene;
@@ -13,23 +26,25 @@ export class Player {
     this.velz = 0;
     this.velx = 0;
     this.range = 128;
+    
+    this.player = new THREE.Mesh(new THREE.SphereGeometry(1, 100, 100), new THREE.MeshBasicMaterial({color: 0xffffff}));
+    this.playerrange = new THREE.Mesh(new THREE.BoxGeometry(this.range, 10, this.range, 5, 5, 5), new THREE.MeshBasicMaterial({color: 0x7bff00, wireframe: true}));
+
+    const w1 = new Blast();
+    const w2 = new GroundBlast();
+    this.weapons = [w1, w2];
+    this.weapon = 0;
+    this.scene.add(this.player);
+
   }
   draw() {
-    const player = new THREE.Mesh(new THREE.SphereGeometry(1, 100, 100), new THREE.MeshBasicMaterial({color: 0xffffff}));
-    const playerrange = new THREE.Mesh(new THREE.BoxGeometry(this.range, 10, this.range, 5, 5, 5), new THREE.MeshBasicMaterial({color: 0x90EE90, wireframe: true}));
-    const sword = new THREE.Mesh(new THREE.SphereGeometry(7.5, 100, 50), new THREE.MeshBasicMaterial({color: 0xffffff, wireframe: true}));
-    this.data = player;
-    this.playerrange = playerrange;
-    this.sword = sword;
-    player.position.x += this.posx;
-    player.position.z += this.posz;
-    playerrange.position.x += this.posx;
-    playerrange.position.z += this.posz;
-    sword.position.x += this.posx;
-    sword.position.z += this.posz;
+    this.player.position.x = this.posx;
+    this.player.position.z = this.posz;
+    this.playerrange.position.x = this.posx;
+    this.playerrange.position.z = this.posz;
+    this.weapons.forEach(e => { e.tool.position.x = this.posx; e.tool.position.z = this.posz; })
     this.scene.position.z -= this.posz;
     this.scene.position.x -= this.posx;
-    this.scene.add(player);
   }
   forward() {
     this.velz = this.accz;
@@ -45,15 +60,15 @@ export class Player {
 
   }
   move() {
-    if(this.chunk.contains(this.data.position.z + this.velz, this.data.position.x + this.velx)) {
-      this.data.position.z += this.velz;
-      this.data.position.x += this.velx;
+    if(this.chunk.contains(this.player.position.z + this.velz, this.player.position.x + this.velx)) {
+
       this.posx += this.velx;
       this.posz += this.velz;
+      this.player.position.z += this.velz;
+      this.player.position.x += this.velx;
       this.playerrange.position.z += this.velz;
       this.playerrange.position.x += this.velx;
-      this.sword.position.z += this.velz;
-      this.sword.position.x += this.velx;
+      this.weapons.forEach(e => { e.tool.position.x += this.velx; e.tool.position.z += this.velz; })
       this.scene.position.z -= this.velz;
       this.scene.position.x -= this.velx;
       if(this.velz !== 0){
@@ -66,6 +81,9 @@ export class Player {
   }
   getNearPoints() {
     return this.quadtree.squareContains(this.posx, this.posz, this.range, []);
+  }
+  changeWeapon() {
+    this.weapon = (this.weapon+1)%this.weapons.length;
   }
   
 }

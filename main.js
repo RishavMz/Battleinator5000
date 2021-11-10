@@ -21,10 +21,10 @@ const controls = new OrbitControls(camera, renderer.domElement);
 
 let nearby = [];
 let score = 0;
-const SWORDRANGE = 15;
 let health = 100;
-let sword = 0;
+let weapon = 0;
 let pointanimate = 0;
+const ENV = 'prod';
 
 document.getElementById('label1').innerHTML= `SCORE : ${score} <br/> HEALTH : ${health}` ;
 
@@ -51,10 +51,10 @@ function animate() {
     }
   }
   
-  if(sword===0) {
-    scene.remove(player.sword);
-  } else if(sword>0) {
-    sword--;
+  if(weapon===0) {
+    scene.remove(player.weapons[player.weapon].tool);
+  } else if(weapon>0) {
+    weapon--;
   }
   
   player.move();
@@ -68,8 +68,12 @@ for(let i=0; i<25; i++) {
   temp.draw();
   qtree.insert(temp);
 }
-qtree.draw();
-console.log(qtree);
+if(ENV === 'dev'){
+  qtree.draw();
+  console.log(qtree);
+  scene.add(player.playerrange);
+}
+
 
 
 document.addEventListener("keydown", onDocumentKeyDown, false);
@@ -88,9 +92,9 @@ function onDocumentKeyDown(event) {
     player.right();
   } else if (keyCode == 32) {
     for(let i=0; i<nearby.length; i++) {
-      scene.add(player.sword);
-      sword = 10;
-      if(Math.sqrt(Math.pow(player.posx-nearby[i].posx,2)+Math.pow(player.posz-nearby[i].posz,2))<=SWORDRANGE){
+      scene.add(player.weapons[player.weapon].tool);
+      weapon = 10;
+      if(Math.sqrt(Math.pow(player.posx-nearby[i].posx,2)+Math.pow(player.posz-nearby[i].posz,2))<=player.weapons[player.weapon].range){
         const id = nearby[i].id;
         qtree.remove(nearby[i]);
         scene.remove(nearby[i].data)
@@ -99,9 +103,13 @@ function onDocumentKeyDown(event) {
         newpt.draw();
         score++;
         document.getElementById('label1').innerHTML= `SCORE : ${score} <br/> HEALTH : ${health}` ;
-        qtree.draw()
+        if(ENV === 'dev'){
+          qtree.draw()
+        }
       }
     }
+  } else if(keyCode == 82) {
+    player.changeWeapon();
   } else if(keyCode == 84) {
     let div = document.getElementById('label2');
     if(div.style.display === 'block') {
@@ -124,3 +132,8 @@ let stateCheck = setInterval(() => {
       document.getElementById('loader').style.display='none';
     } 
   }, 100);  
+
+
+  if(ENV === 'dev'){
+    javascript:(function(){var script=document.createElement('script');script.onload=function(){var stats=new Stats();document.body.appendChild(stats.dom);requestAnimationFrame(function loop(){stats.update();requestAnimationFrame(loop)});};script.src='//mrdoob.github.io/stats.js/build/stats.min.js';document.head.appendChild(script);})()
+  }
