@@ -12,8 +12,8 @@ const renderer = new THREE.WebGLRenderer({ canvas: document.querySelector('#main
 
 renderer.setPixelRatio(window.devicePixelRatio);
 renderer.setSize(window.innerWidth, window.innerHeight);
-camera.position.setZ(20);
-camera.position.setY(10);
+camera.position.setZ(25);
+camera.position.setY(15);
 renderer.render(scene, camera);
 
 //const gridHelper = new THREE.GridHelper(1000,1000);
@@ -23,7 +23,7 @@ const controls = new OrbitControls(camera, renderer.domElement);
 let nearby = [];
 let score = 0;
 let health = 100;
-let weapon = 0;
+let weaponmove = 0;
 let pointanimate = 0;
 const ENV = 'prod';
 const TREE_COUNT = 10;
@@ -64,11 +64,9 @@ function animate() {
   }
   
   
-  //if(weapon===0) {
-  //  scene.remove(player.weapons[player.weapon].tool);
-  //} else if(weapon>0) {
-  //  weapon--;
-  //}
+  if(weaponmove-->0){
+    player.player.rotation.y += THREE.Math.degToRad(60);
+  }
   
   player.move();
   controls.update();
@@ -115,7 +113,7 @@ function onDocumentKeyDown(event) {
     player.right();
   } else if (keyCode == 32) {
     for(let i=0; i<nearby.length; i++) {
-      //weapon = 2;
+      weaponmove = 6;
       if(Math.sqrt(Math.pow(player.posx-nearby[i].posx,2)+Math.pow(player.posz-nearby[i].posz,2))<=player.weapons[player.weapon].range){
         const id = nearby[i].id;
         qtree.remove(nearby[i]);

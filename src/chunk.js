@@ -10,8 +10,8 @@ export class Chunk {
     }
     draw() {
 
-        const ground_image = texture.load('../resources/ground.png');
-        const sky_image = texture.load('../resources/sky.png');
+        const ground_image = texture.load('https://raw.githubusercontent.com/RishavMz/3D_Battle_Arena/main/resources/ground.png');
+        const sky_image = texture.load('https://raw.githubusercontent.com/RishavMz/3D_Battle_Arena/main/resources/sky.png');
         ground_image.wrapS = THREE.RepeatWrapping;
         ground_image.wrapT = THREE.RepeatWrapping;
         ground_image.repeat.set(32, 32);
