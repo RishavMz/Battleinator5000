@@ -56,7 +56,7 @@ function animate() {
       }
     }
   }
-  if(pointanimate%15 == 0){
+  if(pointanimate%5 == 0 && player.walking == 1){
     player.leg1.rotation.x = (player.leg1.rotation.x+0.1)%0.6;
     player.leg2.rotation.x = (player.leg1.rotation.x+0.1)%0.6;
     //player.body.rotation.y = (player.body.rotation.y+0.1)%0.2-0.2;
@@ -104,13 +104,17 @@ function onDocumentKeyDown(event) {
     var keyCode = event.which;
     //console.log(keyCode)
   if (keyCode == 87 ) { 
-    player.forward();        
+    player.forward();     
+    player.walking = 1;   
   } else if (keyCode == 83 ) {
     player.backward();
+    player.walking = 1;   
   } else if (keyCode == 65 ) {
     player.left();
+    player.walking = 1;   
   } else if (keyCode == 68 ) {
     player.right();
+    player.walking = 1;   
   } else if (keyCode == 32) {
     for(let i=0; i<nearby.length; i++) {
       weaponmove = 6;

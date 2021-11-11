@@ -24,7 +24,7 @@ class Axe{
     this.tool = new THREE.Group();
     this.tool.add(handle, head);
     this.range = 17
-    this.holder = -6;
+    this.holder = -5;
     this.tool.position.y += -0.8;
     this.tool.position.z += this.holder;
     this.tool.position.x += 4.5;
@@ -56,7 +56,7 @@ export class Player {
     this.velz = 0;
     this.velx = 0;
     this.range = 128;
-    
+    this.walking = 0;
     const w1 = new Sword();
     const w2 = new Axe();
     const w3 = new Polearm();
@@ -177,6 +177,9 @@ export class Player {
       }
       if(this.velx !== 0){
         this.velx += this.velx>0?-this.decn:this.decn;
+      }
+      if(Math.abs(this.velx) <=0.005 && Math.abs(this.velz) <= 0.05){
+        this.walking = 0;
       }
     }
   }
