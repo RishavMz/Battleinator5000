@@ -57,9 +57,9 @@ function animate() {
     }
   }
   if(pointanimate%15 == 0){
-    player.leg1.rotation.x = (player.leg1.rotation.x+0.1)%0.4;
-    player.leg2.rotation.x = (player.leg1.rotation.x+0.1)%0.4;
-    player.body.rotation.y = (player.body.rotation.y+0.1)%0.2-0.2;
+    player.leg1.rotation.x = (player.leg1.rotation.x+0.1)%0.6;
+    player.leg2.rotation.x = (player.leg1.rotation.x+0.1)%0.6;
+    //player.body.rotation.y = (player.body.rotation.y+0.1)%0.2-0.2;
 
   }
   
