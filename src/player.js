@@ -1,22 +1,45 @@
 import * as THREE from 'three';
 const texture = new THREE.TextureLoader();
 
+const sword_image = texture.load('../resources/sword_hand.png');
+const bark_image = texture.load('../resources/tree_bark.png');
+
 class Sword{
   constructor(){
-    this.tool = new THREE.Mesh(new THREE.SphereGeometry(7.5, 100, 50), new THREE.MeshBasicMaterial({color: 0xffffff, wireframe: true}));
+    this.tool = new THREE.Mesh(new THREE.CylinderGeometry(0.5, 0, 10, 100 ), new THREE.MeshBasicMaterial({map: sword_image}));
     this.range = 14;
+    this.holder = -5;
+    this.tool.position.y = -0.8;
+    this.tool.position.z = this.holder;
+    this.tool.position.x = 4.5;
+    this.tool.rotation.x = THREE.Math.degToRad(90);
   }
 }
 class Axe{
   constructor(){
-    this.tool = new THREE.Mesh(new THREE.CylinderGeometry(12, 12, 3, 100 ), new THREE.MeshBasicMaterial({color: 0xffffff, wireframe: true}));
+    const handle = new THREE.Mesh(new THREE.CylinderGeometry(0.2, 0.2, 10, 100 ), new THREE.MeshBasicMaterial({map: bark_image}));
+    const head = new THREE.Mesh(new THREE.SphereGeometry(2, 50, 50 ), new THREE.MeshBasicMaterial({map: sword_image}));
+    head.position.z = 0;
+    head.position.y = -4;
+    this.tool = new THREE.Group();
+    this.tool.add(handle, head);
     this.range = 17
+    this.holder = -6;
+    this.tool.position.y += -0.8;
+    this.tool.position.z += this.holder;
+    this.tool.position.x += 4.5;
+    this.tool.rotation.x += THREE.Math.degToRad(90);
   }
 }
 class Polearm{
   constructor(){
-    this.tool = new THREE.Mesh(new THREE.CylinderGeometry(15, 12, 1, 100 ), new THREE.MeshBasicMaterial({color: 0xffffff, wireframe: true}));
-    this.range = 20
+    this.tool = new THREE.Mesh(new THREE.CylinderGeometry(0.5, 0.2, 20, 100 ), new THREE.MeshBasicMaterial({map: bark_image}));
+    this.range = 20;
+    this.holder = -8;
+    this.tool.position.y = -0.8;
+    this.tool.position.z = this.holder;
+    this.tool.position.x = 4.5;
+    this.tool.rotation.x = THREE.Math.degToRad(90);
   }
 }
 
@@ -34,6 +57,12 @@ export class Player {
     this.velx = 0;
     this.range = 128;
     
+    const w1 = new Sword();
+    const w2 = new Axe();
+    const w3 = new Polearm();
+    this.weapons = [w1, w2, w3];
+    this.weapon = 0;
+
       const head_img = texture.load('../resources/player_head.png');
       const body_img = texture.load('../resources/player_body.png');
       const limb_img = texture.load('../resources/player_limb.png');
@@ -41,27 +70,17 @@ export class Player {
       const head = new THREE.Mesh(new THREE.SphereGeometry(1.5, 100, 100), new THREE.MeshBasicMaterial({map: head_img}));
       const body = new THREE.Mesh(new THREE.CylinderGeometry(2, 1, 5, 100,100, false), new THREE.MeshBasicMaterial({map: body_img}));
       const neck = new THREE.Mesh(new THREE.SphereGeometry(2, 100, 100,0, 720, 0, 1), new THREE.MeshBasicMaterial({map: head_img}));
-      const hand11 = new THREE.Mesh(new THREE.CylinderGeometry(0.5, 0.3, 4, 100,100, false), new THREE.MeshBasicMaterial({map: limb_img}));
-      const hand12 = new THREE.Mesh(new THREE.CylinderGeometry(0, 0.3, 5, 100,100, false), new THREE.MeshBasicMaterial({map: metal_img}));
-      const hand21 = new THREE.Mesh(new THREE.CylinderGeometry(0.5, 0.3, 4, 100,100, false), new THREE.MeshBasicMaterial({map: limb_img}));
-      const hand22 = new THREE.Mesh(new THREE.CylinderGeometry(0, 0.3, 5, 100,100, false), new THREE.MeshBasicMaterial({map: metal_img}));
+      const hand1 = new THREE.Mesh(new THREE.CylinderGeometry(0.5, 0.3, 4, 100,100, false), new THREE.MeshBasicMaterial({map: limb_img}));
+      const hand2 = new THREE.Mesh(new THREE.CylinderGeometry(0.5, 0.3, 4, 100,100, false), new THREE.MeshBasicMaterial({map: limb_img}));
       const skirt = new THREE.Mesh(new THREE.CylinderGeometry(1, 1.8, 3, 100,100, false), new THREE.MeshBasicMaterial( {map: metal_img}));
       const leg1 = new THREE.Mesh(new THREE.CylinderGeometry(0.5, 0.3, 5, 100,100, false), new THREE.MeshBasicMaterial({map: metal_img}));
       const leg2 = new THREE.Mesh(new THREE.CylinderGeometry(0.5, 0.3, 5, 100,100, false), new THREE.MeshBasicMaterial({map: metal_img}));
-      hand11.position.x = 3;
-      hand11.position.y = 0.8;
-      hand12.position.y = -0.5;
-      hand12.position.z = 1.3;
-      hand12.position.x = 4.5;
-      hand21.position.x = -3;
-      hand21.position.y = 0.8;
-      hand22.position.y = -0.8;
-      hand22.position.z = 1.3;
-      hand22.position.x = -4.5;
-      hand11.rotation.z = THREE.Math.degToRad(45);
-      hand12.rotation.x = THREE.Math.degToRad(90);
-      hand21.rotation.z = THREE.Math.degToRad(-45);
-      hand22.rotation.x = THREE.Math.degToRad(90);
+      hand1.position.x = 3;
+      hand1.position.y = 0.8;
+      hand2.position.x = -3;
+      hand2.position.y = 0.8;
+      hand1.rotation.z = THREE.Math.degToRad(45);
+      hand2.rotation.z = THREE.Math.degToRad(-45);
       skirt.position.y = -2.5;
       leg1.position.y = -6;
       leg2.position.y = -6;
@@ -73,7 +92,7 @@ export class Player {
       neck.position.y = 1;
       head.position.y = 4;
       this.player = new THREE.Group();
-      this.player.add(head, body, neck, hand11, hand12, hand21, hand22, skirt, leg1, leg2);
+      this.player.add(head, body, neck, hand1, hand2, skirt, leg1, leg2);
       this.player.position.x = this.posx;
       this.player.position.z = this.posz;
       this.player.rotation.y = THREE.Math.degToRad(180);
@@ -82,12 +101,6 @@ export class Player {
       this.body = body;
 
     this.playerrange = new THREE.Mesh(new THREE.BoxGeometry(this.range, 10, this.range, 5, 5, 5), new THREE.MeshBasicMaterial({color: 0x7bff00, wireframe: true}));
-
-    const w1 = new Sword();
-    const w2 = new Axe();
-    const w3 = new Polearm();
-    this.weapons = [w1, w2, w3];
-    this.weapon = 0;
     this.scene.add(this.player);
 
   }
@@ -96,25 +109,46 @@ export class Player {
     this.player.position.z = this.posz;
     this.playerrange.position.x = this.posx;
     this.playerrange.position.z = this.posz;
-    this.weapons.forEach(e => { e.tool.position.x = this.posx; e.tool.position.z = this.posz; })
+    this.weapons.forEach(e => { e.tool.position.x += this.posx; e.tool.position.z += this.posz; })
     this.scene.position.z -= this.posz;
     this.scene.position.x -= this.posx;
   }
   forward() {
     this.velz = this.accz;
     this.player.rotation.y = THREE.Math.degToRad(180);
+    this.weapons.forEach(e => { 
+      e.tool.rotation.z = THREE.Math.degToRad(0);
+      e.tool.position.x = this.player.position.x + 4.5;
+      e.tool.position.z = this.player.position.z + this.weapons[this.weapon].holder;
+    });    
   }
   backward() {
     this.velz = -this.accz;
     this.player.rotation.y = THREE.Math.degToRad(0);
+    this.weapons.forEach(e => {
+      e.tool.rotation.z = THREE.Math.degToRad(180);
+      e.tool.position.x = this.player.position.x - 4.5;
+      e.tool.position.z = this.player.position.z - this.weapons[this.weapon].holder;
+    });
   }
   left() {
     this.velx = this.accx;
     this.player.rotation.y = THREE.Math.degToRad(-90);
+    this.weapons.forEach(e => { 
+      e.tool.rotation.z = THREE.Math.degToRad(-90);
+      e.tool.position.x = this.player.position.x + this.weapons[this.weapon].holder;
+      e.tool.position.z = this.player.position.z - 4.5;
+    }); 
   }
   right() {
     this.velx = -this.accx;
     this.player.rotation.y = THREE.Math.degToRad(90);
+    this.weapons.forEach(e => { 
+      e.tool.rotation.z = THREE.Math.degToRad(90);
+      e.tool.position.x = this.player.position.x - this.weapons[this.weapon].holder;
+      e.tool.position.z = this.player.position.z + 4.5;
+    }); 
+
 
   }
   move() {
@@ -145,7 +179,7 @@ export class Player {
     if(this.weapon<0){
       this.weapon = this.weapons.length+this.weapon;
     }
-    console.log(this.weapon);
+    //console.log(this.weapon);
   }
   
 }

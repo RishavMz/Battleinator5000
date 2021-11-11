@@ -40,6 +40,7 @@ const qtree = new QuadTree(scene, 0, 0, 1024);
 
 const player = new Player(scene, qtree, chunk, 0, 400);
 player.draw();
+scene.add(player.weapons[player.weapon].tool);
 
 
 function animate() {
@@ -63,11 +64,11 @@ function animate() {
   }
   
   
-  if(weapon===0) {
-    scene.remove(player.weapons[player.weapon].tool);
-  } else if(weapon>0) {
-    weapon--;
-  }
+  //if(weapon===0) {
+  //  scene.remove(player.weapons[player.weapon].tool);
+  //} else if(weapon>0) {
+  //  weapon--;
+  //}
   
   player.move();
   controls.update();
@@ -114,8 +115,7 @@ function onDocumentKeyDown(event) {
     player.right();
   } else if (keyCode == 32) {
     for(let i=0; i<nearby.length; i++) {
-      scene.add(player.weapons[player.weapon].tool);
-      weapon = 2;
+      //weapon = 2;
       if(Math.sqrt(Math.pow(player.posx-nearby[i].posx,2)+Math.pow(player.posz-nearby[i].posz,2))<=player.weapons[player.weapon].range){
         const id = nearby[i].id;
         qtree.remove(nearby[i]);
@@ -132,11 +132,15 @@ function onDocumentKeyDown(event) {
     }
   } else if(keyCode == 69) {
     document.getElementById(`item${player.weapon}`).style.borderColor="black";
+    scene.remove(player.weapons[player.weapon].tool);
     player.changeWeapon(-1);  
+    scene.add(player.weapons[player.weapon].tool);
     document.getElementById(`item${player.weapon}`).style.borderColor="gold";
   } else if(keyCode == 82) {
     document.getElementById(`item${player.weapon}`).style.borderColor="black";
-    player.changeWeapon(1);
+    scene.remove(player.weapons[player.weapon].tool);
+    player.changeWeapon(1);  
+    scene.add(player.weapons[player.weapon].tool);
     document.getElementById(`item${player.weapon}`).style.borderColor="gold";
   } else if(keyCode == 84) {
     let div = document.getElementById('label2');
