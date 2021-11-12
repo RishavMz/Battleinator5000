@@ -13,6 +13,8 @@ class Sword{
     this.tool.position.z = this.holder;
     this.tool.position.x = 4.5;
     this.tool.rotation.x = THREE.Math.degToRad(90);
+    this.direction = 1; // 0-> north ; 1-> east ; 2-> south ; 2-> west
+    this.bullet = 0;
   }
 }
 class Axe{
@@ -45,6 +47,7 @@ class Polearm{
 
 export class Player {
   constructor(scene, quadtree, chunk, posx, posz) {
+    this.id = Math.floor(Math.random()*100000);
     this.scene = scene;
     this.chunk = chunk;
     this.posx = posx;
@@ -69,7 +72,7 @@ export class Player {
       const body_img = texture.load('https://raw.githubusercontent.com/RishavMz/3D_Battle_Arena/main/client/resources/player_body.png');
       const limb_img = texture.load('https://raw.githubusercontent.com/RishavMz/3D_Battle_Arena/main/client/resources/player_limb.png');
       const metal_img = texture.load('https://raw.githubusercontent.com/RishavMz/3D_Battle_Arena/main/client/resources/player_metal.png');
-      const head = new THREE.Mesh(new THREE.SphereGeometry(1.5, 100, 100), new THREE.MeshBasicMaterial({map: head_img}));
+      const head = new THREE.Mesh(new THREE.SphereGeometry(15, 100, 100), new THREE.MeshBasicMaterial({map: head_img}));
       const body = new THREE.Mesh(new THREE.CylinderGeometry(2, 1, 5, 100,100, false), new THREE.MeshBasicMaterial({map: body_img}));
       const neck = new THREE.Mesh(new THREE.SphereGeometry(2, 100, 100,0, 720, 0, 1), new THREE.MeshBasicMaterial({map: head_img}));
       const hand1 = new THREE.Mesh(new THREE.CylinderGeometry(0.5, 0.3, 4, 100,100, false), new THREE.MeshBasicMaterial({map: limb_img}));
@@ -123,6 +126,12 @@ export class Player {
     this.weapons.forEach(e => { e.tool.position.x += this.posx; e.tool.position.z += this.posz; })
     this.scene.position.z -= this.posz;
     this.scene.position.x -= this.posx;
+  }
+  multiplayerdraw() {
+    this.player.position.x = this.posx;
+    this.player.position.z = this.posz;
+    this.playerrange.position.x = this.posx;
+    this.playerrange.position.z = this.posz;
   }
   forward() {
     this.velz = this.accz;
@@ -194,6 +203,10 @@ export class Player {
       this.weapon = this.weapons.length+this.weapon;
     }
     //console.log(this.weapon);
+  }
+  forcemove(posx, posz) {
+    this.player.position.x = posx;
+    this.player.position.z = posz;
   }
   
 }

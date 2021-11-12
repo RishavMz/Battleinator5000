@@ -11,16 +11,54 @@ app.get('/', (req, res) => {
     res.send("Its working");
 });
 
-io.on('connection', (socket) => {
+const points = [];
+const trees = [];
+const bush = [];
+const ENEMY_COUNT = 10;
+const OBSTACLE_COUNT = 10;
+for(let i=0; i<ENEMY_COUNT; i++){
+    points.push({
+        id: i,
+        posx: Math.random()*1024 - 512, 
+        posz: Math.random()*1024 - 512
+    });
+}
+for(let i=0; i<OBSTACLE_COUNT; i++){
+    trees.push({
+        id: i,
+        posx: Math.random()*1024 - 512, 
+        posz: Math.random()*1024 - 512
+    });
+}
+for(let i=0; i<OBSTACLE_COUNT; i++){
+    bush.push({
+        id: i,
+        posx: Math.random()*1024 - 512, 
+        posz: Math.random()*1024 - 512
+    });
+}
+
+const players = {};
+players['id'] = [];
+
+io.on('connection', async(socket) => {
     console.log('A user '+ socket.handshake.auth.username +' connected with email ID ', socket.handshake.auth.email);
-    socket.on('message', (data)=>{
-        console.log("Message: ",data);
-    socket.emit('data', '124567890');
-    setTimeout(()=>{
-        socket.emit('data', '124567890');
-    }, 10000);
+
+    socket.on('joined', (data)=>{
+        players[data.id] = data;
+        players['id'].push(data);
+        console.log("Joined as :",data);
+        io.emit('joined', data);
+        socket.on('move', (val)=>{
+            console.log("moov")
+            io.emit('movement', {id: data.id, posx: val.posx, posz: val.posz});
+        });
     });
 });
+
+setInterval(()=>{
+    io.emit('players', players);
+}, 5000);
 
 server.listen(PORT, () => {
     console.log('Server is up and listening on port ',PORT);
