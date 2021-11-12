@@ -8,8 +8,8 @@ import { Point, QuadTree } from './quadtree';
 import { Tree, Grass } from './objects';
 
 const BACKEND = "ws://127.0.0.1:5000";
-const EMAIL = "sampleperson@gmail.com";
-const USERNAME = "noobmaster69";
+//const EMAIL = "sampleperson@gmail.com";
+//const USERNAME = "noobmaster69";
 
 export class Game{
   constructor(email, username){
@@ -18,13 +18,36 @@ export class Game{
     this.animate = this.animate.bind(this);
     this.onDocumentKeyUp = this.onDocumentKeyUp.bind(this);
     this.onDocumentKeyDown = this.onDocumentKeyDown.bind(this);
-    this.backend = "ws://127.0.0.1:5000";
-    const socket = io(BACKEND, { reconnectionDelayMax: 10000, auth: { email: EMAIL , username: USERNAME }});
-    socket.emit('destroyed', 'point_id');
-    socket.on('points', (data)=>{
+    this.backend = BACKEND;
+    this.socket = io(this.backend, { reconnectionDelayMax: 10000, auth: { email: this.email , username: this.username }});
+    this.socket.emit('destroyed', 'point_id');
+    this.socket.on('points', (data)=>{
       const pts= "list of points";
     });
 
+    document.getElementById('root').innerHTML = `
+            <div class="label1" id="label1"></div>
+            <div class="label2" id="label2">
+              <center><h2>Tutorial</h2></center>
+              <ul>
+                <li>w : Accelerate forward</li>
+                <li>s : Accelerate backward</li>
+                <li>a : Accelerate leftward</li>
+                <li>d : Accelerate rightward</li>
+                <li>e : Previous Weapon</li>
+                <li>r : Next Weapon</li>
+                <li>space : Attack objects within range</li>
+                <li>t : Toggle tutorial on/off</li>
+              </ul>
+              <br/>
+              PRESS ANY KEY TO START
+            </div>
+            <div class="inventory" id="inventory">
+              <div class="invitem" ><img class = "invimg" id="item0" src="./resources/sword.png"/></div>
+              <div class="invitem" ><img class = "invimg" id="item1" src="./resources/axe.png"/></div>
+              <div class="invitem" ><img class = "invimg" id="item2" src="./resources/polearm.png"/></div>
+            </div>
+            <canvas id="main"></canvas>`;
 
     this.scene = new THREE.Scene();
     this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 2048);
@@ -83,7 +106,6 @@ export class Game{
           document.getElementById('label1').style.display='block';
           document.getElementById('label2').style.display='block';
           document.getElementById('inventory').style.display='block';
-          document.getElementById('loader').style.display='none';
         } 
       }, 100);  
       if(this.ENV === 'dev'){
@@ -177,4 +199,8 @@ export class Game{
     this.nearby = this.player.getNearPoints();
   }
 
+  gameover(){
+    this.socket.close();
+    cancelAnimationFrame(this.animate);
+  }
 }
