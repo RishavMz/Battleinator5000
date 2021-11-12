@@ -62,6 +62,8 @@ export class Player {
     const w3 = new Polearm();
     this.weapons = [w1, w2, w3];
     this.weapon = 0;
+    this.score = 0;
+    this.health = 100;
 
       const head_img = texture.load('https://raw.githubusercontent.com/RishavMz/3D_Battle_Arena/main//resources/player_head.png');
       const body_img = texture.load('https://raw.githubusercontent.com/RishavMz/3D_Battle_Arena/main//resources/player_body.png');
