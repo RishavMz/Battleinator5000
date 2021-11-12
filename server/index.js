@@ -50,15 +50,16 @@ io.on('connection', async(socket) => {
         console.log("Joined as :",data);
         io.emit('joined', data);
         socket.on('move', (val)=>{
-            console.log("moov")
-            io.emit('movement', {id: data.id, posx: val.posx, posz: val.posz});
+            players[val.id].posx = val.posx;
+            players[val.id].posz = val.posz;
         });
     });
 });
 
 setInterval(()=>{
     io.emit('players', players);
-}, 5000);
+    console.log(players)
+}, 1000);
 
 server.listen(PORT, () => {
     console.log('Server is up and listening on port ',PORT);

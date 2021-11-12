@@ -104,14 +104,14 @@ export class Multiplayer{
                     player.multiplayerdraw();
                 }
             });
+        } else {
+            data['id'].forEach((e)=>{
+                if(this.player.id !== e.id){
+                    this.playermap[e.id].forcemove(e.posx, e.posz);
+                }
+            });
         }
-      });
-      this.socket.on('movement', (data)=>{
-        console.log("movinf",this.playermap[data.id].id, this.playermap[data.id].posx)
-            if(this.player.id !== data.id){
-                this.playermap[data.id].forcemove(data.posx, data.posz);
-            }
-        });      
+      });     
   }
 
   animate() {
