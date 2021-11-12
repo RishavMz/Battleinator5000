@@ -1,8 +1,8 @@
 import * as THREE from 'three';
 const texture = new THREE.TextureLoader();
 
-const sword_image = texture.load('https://raw.githubusercontent.com/RishavMz/3D_Battle_Arena/main/resources/sword_hand.png');
-const bark_image = texture.load('https://raw.githubusercontent.com/RishavMz/3D_Battle_Arena/main/resources/tree_bark.png');
+const sword_image = texture.load('https://raw.githubusercontent.com/RishavMz/3D_Battle_Arena/main/client/resources/sword_hand.png');
+const bark_image = texture.load('https://raw.githubusercontent.com/RishavMz/3D_Battle_Arena/main/client/resources/tree_bark.png');
 
 class Sword{
   constructor(){
@@ -65,10 +65,10 @@ export class Player {
     this.score = 0;
     this.health = 100;
 
-      const head_img = texture.load('https://raw.githubusercontent.com/RishavMz/3D_Battle_Arena/main//resources/player_head.png');
-      const body_img = texture.load('https://raw.githubusercontent.com/RishavMz/3D_Battle_Arena/main//resources/player_body.png');
-      const limb_img = texture.load('https://raw.githubusercontent.com/RishavMz/3D_Battle_Arena/main//resources/player_limb.png');
-      const metal_img = texture.load('https://raw.githubusercontent.com/RishavMz/3D_Battle_Arena/main//resources/player_metal.png');
+      const head_img = texture.load('https://raw.githubusercontent.com/RishavMz/3D_Battle_Arena/main/client/resources/player_head.png');
+      const body_img = texture.load('https://raw.githubusercontent.com/RishavMz/3D_Battle_Arena/main/client/resources/player_body.png');
+      const limb_img = texture.load('https://raw.githubusercontent.com/RishavMz/3D_Battle_Arena/main/client/resources/player_limb.png');
+      const metal_img = texture.load('https://raw.githubusercontent.com/RishavMz/3D_Battle_Arena/main/client/resources/player_metal.png');
       const head = new THREE.Mesh(new THREE.SphereGeometry(1.5, 100, 100), new THREE.MeshBasicMaterial({map: head_img}));
       const body = new THREE.Mesh(new THREE.CylinderGeometry(2, 1, 5, 100,100, false), new THREE.MeshBasicMaterial({map: body_img}));
       const neck = new THREE.Mesh(new THREE.SphereGeometry(2, 100, 100,0, 720, 0, 1), new THREE.MeshBasicMaterial({map: head_img}));

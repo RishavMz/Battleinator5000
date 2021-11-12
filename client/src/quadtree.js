@@ -10,10 +10,10 @@ export class Point {
         this.scene = scene;
     }
     draw() {
-        const head_img = texture.load('https://raw.githubusercontent.com/RishavMz/3D_Battle_Arena/main/resources/head.png');
-        const body_img = texture.load('https://raw.githubusercontent.com/RishavMz/3D_Battle_Arena/main/resources/body.png');
-        const limb_img = texture.load('https://raw.githubusercontent.com/RishavMz/3D_Battle_Arena/main/resources/limb.png');
-        const metal_img = texture.load('https://raw.githubusercontent.com/RishavMz/3D_Battle_Arena/main/resources/metal.png');
+        const head_img = texture.load('https://raw.githubusercontent.com/RishavMz/3D_Battle_Arena/main/client/resources/head.png');
+        const body_img = texture.load('https://raw.githubusercontent.com/RishavMz/3D_Battle_Arena/main/client/resources/body.png');
+        const limb_img = texture.load('https://raw.githubusercontent.com/RishavMz/3D_Battle_Arena/main/client/resources/limb.png');
+        const metal_img = texture.load('https://raw.githubusercontent.com/RishavMz/3D_Battle_Arena/main/client/resources/metal.png');
 
         const head = new THREE.Mesh(new THREE.SphereGeometry(1.5, 100, 100), new THREE.MeshBasicMaterial({map: head_img}));
         const body = new THREE.Mesh(new THREE.CylinderGeometry(2, 1, 5, 100,100, false), new THREE.MeshBasicMaterial({map: body_img}));

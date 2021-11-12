@@ -8,7 +8,7 @@ export class Grass{
         this.posz = posz;
     }
     draw(){
-        const canopy_image = texture.load('https://raw.githubusercontent.com/RishavMz/3D_Battle_Arena/main/resources/bush.png');
+        const canopy_image = texture.load('https://raw.githubusercontent.com/RishavMz/3D_Battle_Arena/main/client/resources/bush.png');
         this.top  = new THREE.Mesh( new THREE.SphereGeometry( 12, 10, 10, 100, 100, 100, 100), new THREE.MeshBasicMaterial( {map: canopy_image} ) );
         this.top1 = new THREE.Mesh( new THREE.SphereGeometry( 12, 10, 10, 100, 100, 100, 100), new THREE.MeshBasicMaterial( {map: canopy_image} ) );
         this.top2 = new THREE.Mesh( new THREE.SphereGeometry( 12, 10, 10, 100, 100, 100, 100), new THREE.MeshBasicMaterial( {map: canopy_image} ) );
@@ -38,8 +38,8 @@ export class Tree{
       this.posz = posz;
     }
     draw() {
-      const canopy_image = texture.load('https://raw.githubusercontent.com/RishavMz/3D_Battle_Arena/main/resources/tree_leaves.png');
-      const bark_image = texture.load('https://raw.githubusercontent.com/RishavMz/3D_Battle_Arena/main/resources/tree_bark.png');
+      const canopy_image = texture.load('https://raw.githubusercontent.com/RishavMz/3D_Battle_Arena/main/client/resources/tree_leaves.png');
+      const bark_image = texture.load('https://raw.githubusercontent.com/RishavMz/3D_Battle_Arena/main/client/resources/tree_bark.png');
       this.bark    = new THREE.Mesh( new THREE.CylinderGeometry( 1.6, 1.6, 16, 100 ), new THREE.MeshBasicMaterial( {map: bark_image} ) );
       this.top  = new THREE.Mesh( new THREE.SphereGeometry( 8, 10, 10, 100, 100, 100, 100), new THREE.MeshBasicMaterial( {map: canopy_image} ) );
       this.top1 = new THREE.Mesh( new THREE.SphereGeometry( 8, 10, 10, 100, 100, 100, 100), new THREE.MeshBasicMaterial( {map: canopy_image} ) );
