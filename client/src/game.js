@@ -67,7 +67,7 @@ export class Game{
     this.chunk = new Chunk(this.scene, 0, 0, 1024);
     this.chunk.draw();
     this.qtree = new QuadTree(this.scene, 0, 0, 1024);
-    this.player = new Player(this.scene, this.qtree, this.chunk, 0, 400);
+    this.player = new Player(this.scene, this.qtree, this.chunk, this.username, 0, 400);
     this.player.draw();
     this.scene.add(this.player.weapons[this.player.weapon].tool);
     document.getElementById('label1').innerHTML= `SCORE : ${this.player.score} <br/> HEALTH : ${this.player.health}` ;

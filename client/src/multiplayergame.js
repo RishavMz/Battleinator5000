@@ -59,10 +59,10 @@ export class Multiplayer{
 
     this.chunk = new Chunk(this.scene, 0, 0, 1024);
     this.chunk.draw();
-    this.player = new Player(this.scene, this.qtree, this.chunk, Math.random()*1024 - 512, Math.random()*1024 - 512);
+    this.player = new Player(this.scene, this.qtree, this.chunk, this.username, Math.random()*1024 - 512, Math.random()*1024 - 512);
     this.scene.add(this.player.weapons[0].tool);
     this.player.draw();
-    this.socket.emit('joined', {id: this.player.id, posx: this.player.posx, posz: this.player.posz});
+    this.socket.emit('joined', {id: this.player.id, username: this.player.username, posx: this.player.posx, posz: this.player.posz});
     this.playermap[this.player.id] = this.player;
     document.getElementById('label1').innerHTML= `SCORE : ${this.player.score} <br/> HEALTH : ${this.player.health}` ;
 
@@ -86,7 +86,7 @@ export class Multiplayer{
           this.players.push(data);
           console.log("Joined", data);
           if(data.id != this.player.id){
-            let player = new Player(this.scene, this.qtree, this.chunk, data.posx, data.posz);
+            let player = new Player(this.scene, this.qtree, this.chunk, data.username, data.posx, data.posz);
             player.id = data.id;
             this.playermap[player.id] = player;
             player.multiplayerdraw();
@@ -97,7 +97,7 @@ export class Multiplayer{
         if(this.players.length === 1){
             data['id'].forEach((e)=>{
                 if(this.player.id !== e.id){
-                    let player = new Player(this.scene, this.qtree, this.chunk, e.posx, e.posz);
+                    let player = new Player(this.scene, this.qtree, this.chunk, data.username, e.posx, e.posz);
                     player.id = e.id;
                     this.playermap[player.id] = player;
                     this.players.push(data);
@@ -123,7 +123,7 @@ export class Multiplayer{
     }    
     this.player.move();
     if(this.pointanimate%50 === 0){
-        this.socket.emit('move', {id: this.player.id, posx: this.player.posx, posz: this.player.posz}); 
+        this.socket.emit('move', {id: this.player.id, username: this.player.username, posx: this.player.posx, posz: this.player.posz}); 
     }
     this.controls.update();
     this.renderer.render(this.scene, this.camera);

@@ -1,5 +1,9 @@
 import * as THREE from 'three';
+import { FontLoader } from 'three/examples/jsm/loaders/FontLoader.js';
+import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry.js';
+
 const texture = new THREE.TextureLoader();
+const floader = new FontLoader();
 
 const sword_image = texture.load('https://raw.githubusercontent.com/RishavMz/3D_Battle_Arena/main/client/resources/sword_hand.png');
 const bark_image = texture.load('https://raw.githubusercontent.com/RishavMz/3D_Battle_Arena/main/client/resources/tree_bark.png');
@@ -46,8 +50,9 @@ class Polearm{
 }
 
 export class Player {
-  constructor(scene, quadtree, chunk, posx, posz) {
+  constructor(scene, quadtree, chunk, username, posx, posz) {
     this.id = Math.floor(Math.random()*100000);
+    this.username = username;
     this.scene = scene;
     this.chunk = chunk;
     this.posx = posx;
@@ -113,9 +118,22 @@ export class Player {
       this.leg1 = leg1;
       this.leg2 = leg2;
       this.body = body;
+      const font = floader.load('../resources/font.json', (font)=>{
+        const tgeometry = new TextGeometry(this.username, {
+          font: font,
+          size: 2,
+          height: 0.02
+        }) 
+        this.playername = new  THREE.Mesh(tgeometry, [ new THREE.MeshDepthMaterial({color: 0xffffff}),new THREE.MeshDepthMaterial({color: 0x000000}) ])
+        this.playername.position.y = 10;
+        this.playername.position.x -= 5;
+        this.playername.translateX(10)
+        this.playername.rotation.y = THREE.Math.degToRad(180);
+        this.player.add(this.playername);
+        this.scene.add(this.player);
+      })
 
     this.playerrange = new THREE.Mesh(new THREE.BoxGeometry(this.range, 10, this.range, 5, 5, 5), new THREE.MeshBasicMaterial({color: 0x7bff00, wireframe: true}));
-    this.scene.add(this.player);
 
   }
   draw() {
