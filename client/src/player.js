@@ -57,6 +57,8 @@ export class Player {
     this.chunk = chunk;
     this.posx = posx;
     this.posz = posz;
+    this.newposx = posx;
+    this.newposz = posz;
     this.quadtree = quadtree;
     this.accz = -0.5;
     this.accx = -0.5;
@@ -222,9 +224,23 @@ export class Player {
     }
     //console.log(this.weapon);
   }
-  forcemove(posx, posz) {
-    this.player.position.x = posx;
-    this.player.position.z = posz;
+  multiplayermove(posx, posz) {
+    this.newposx = posx;
+    this.newposz = posz;
   }
-  
+  multiplayermover(){
+    console.log("called")
+    //this.player.position.x = this.newposx;
+    //this.player.position.z = this.newposz;
+    if(this.player.position.x - this.newposx>1){
+       this.player.position.x += this.accx;
+    }else if(this.player.position.x - this.newposx<-1){
+       this.player.position.x -= this.accx;
+    }
+    if(this.player.position.z - this.newposz>1){
+       this.player.position.z += this.accz;
+    }else if(this.player.position.z - this.newposz<1){
+       this.player.position.z -= this.accz;
+    }
+  }
 }

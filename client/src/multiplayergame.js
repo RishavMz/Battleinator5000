@@ -84,7 +84,7 @@ export class Multiplayer{
       //this.socket.emit('destroyed', 'point_id');
       this.socket.on('joined', (data)=>{
           this.players.push(data);
-          console.log("Joined", data);
+          //console.log("Joined", data);
           if(data.id != this.player.id){
             let player = new Player(this.scene, this.qtree, this.chunk, data.username, data.posx, data.posz);
             player.id = data.id;
@@ -93,21 +93,20 @@ export class Multiplayer{
           }  
       })
       this.socket.on('players', (data)=>{
-          //console.log(data)
         if(this.players.length === 1){
             data['id'].forEach((e)=>{
                 if(this.player.id !== e.id){
-                    let player = new Player(this.scene, this.qtree, this.chunk, data.username, e.posx, e.posz);
+                    let player = new Player(this.scene, this.qtree, this.chunk, e.username, e.posx, e.posz);
                     player.id = e.id;
                     this.playermap[player.id] = player;
-                    this.players.push(data);
+                    this.players.push(e);
                     player.multiplayerdraw();
                 }
             });
         } else {
             data['id'].forEach((e)=>{
                 if(this.player.id !== e.id){
-                    this.playermap[e.id].forcemove(e.posx, e.posz);
+                    this.playermap[e.id].multiplayermove(e.posx, e.posz);
                 }
             });
         }
@@ -122,6 +121,11 @@ export class Multiplayer{
       this.player.leg2.rotation.x = (this.player.leg1.rotation.x+0.1)%0.6;
     }    
     this.player.move();
+    this.players.forEach((e)=>{
+      if(e.id !== this.player.id){
+        this.playermap[e.id].multiplayermover();
+      }
+    })
     if(this.pointanimate%50 === 0){
         this.socket.emit('move', {id: this.player.id, username: this.player.username, posx: this.player.posx, posz: this.player.posz}); 
     }
@@ -147,7 +151,7 @@ export class Multiplayer{
     this.player.right();
     this.player.walking = 1;  
   } else if (keyCode == 32) {
-      console.log("Pressed",this.pointanimate)
+      //console.log("Pressed",this.pointanimate)
       
         document.getElementById('label1').innerHTML= `SCORE : ${this.player.score++} <br/> HEALTH : ${this.player.health}` ;
 
