@@ -120,7 +120,7 @@ export class Player {
       this.leg1 = leg1;
       this.leg2 = leg2;
       this.body = body;
-      const font = floader.load('../resources/font.json', (font)=>{
+      const font = floader.load('https://raw.githubusercontent.com/RishavMz/3D_Battle_Arena/main/client/resources/font.json', (font)=>{
         const tgeometry = new TextGeometry(this.username, {
           font: font,
           size: 2,
