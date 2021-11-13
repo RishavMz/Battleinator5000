@@ -38,9 +38,9 @@ export class Game{
               PRESS ANY KEY TO START
             </div>
             <div class="inventory" id="inventory">
-              <div class="invitem" ><img class = "invimg" id="item0" src="./resources/sword.png"/></div>
-              <div class="invitem" ><img class = "invimg" id="item1" src="./resources/axe.png"/></div>
-              <div class="invitem" ><img class = "invimg" id="item2" src="./resources/polearm.png"/></div>
+              <div class="invitem" ><img class = "invimg" id="item0" src="https://raw.githubusercontent.com/RishavMz/3D_Battle_Arena/main/client/resources/sword.png"/></div>
+              <div class="invitem" ><img class = "invimg" id="item1" src="https://raw.githubusercontent.com/RishavMz/3D_Battle_Arena/main/client/resources/axe.png"></div>
+              <div class="invitem" ><img class = "invimg" id="item2" src="https://raw.githubusercontent.com/RishavMz/3D_Battle_Arena/main/client/resources/polearm.png"/></div>
             </div>
             <canvas id="main"></canvas>`;
 
@@ -67,7 +67,7 @@ export class Game{
     this.chunk = new Chunk(this.scene, 0, 0, 1024);
     this.chunk.draw();
     this.qtree = new QuadTree(this.scene, 0, 0, 1024);
-    this.player = new Player(this.scene, this.qtree, this.chunk, this.username, 0, 400);
+    this.player = new Player(this.scene, this.qtree, this.chunk, '', 0, 400);
     this.player.draw();
     this.scene.add(this.player.weapons[this.player.weapon].tool);
     document.getElementById('label1').innerHTML= `SCORE : ${this.player.score} <br/> HEALTH : ${this.player.health}` ;

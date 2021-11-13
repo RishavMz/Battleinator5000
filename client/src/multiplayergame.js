@@ -10,6 +10,7 @@ const BACKEND = "ws://127.0.0.1:5000";
 
 export class Multiplayer{
   constructor(email, username){
+    alert('Backend server is on sick leave, hence we are unable to serve multiplayer environment now. Feel lonely here? You can still enjoy the single player mode ;)')
     this.email = email;
     this.username = username;
     this.animate = this.animate.bind(this);
