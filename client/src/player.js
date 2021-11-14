@@ -5,47 +5,47 @@ import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry.js';
 const texture = new THREE.TextureLoader();
 const floader = new FontLoader();
 
-const sword_image = texture.load('https://raw.githubusercontent.com/RishavMz/3D_Battle_Arena/main/client/resources/sword_hand.png');
-const bark_image = texture.load('https://raw.githubusercontent.com/RishavMz/3D_Battle_Arena/main/client/resources/tree_bark.png');
+//const sword_image = texture.load('https://raw.githubusercontent.com/RishavMz/3D_Battle_Arena/main/client/resources/sword_hand.png');
+//const bark_image = texture.load('https://raw.githubusercontent.com/RishavMz/3D_Battle_Arena/main/client/resources/tree_bark.png');
 
 class Sword{
   constructor(){
-    this.tool = new THREE.Mesh(new THREE.CylinderGeometry(0.5, 0, 10, 100 ), new THREE.MeshBasicMaterial({map: sword_image}));
+    //this.tool = new THREE.Mesh(new THREE.CylinderGeometry(0.5, 0, 10, 100 ), new THREE.MeshBasicMaterial({map: sword_image}));
     this.range = 14;
     this.holder = -5;
-    this.tool.position.y = -0.8;
-    this.tool.position.z = this.holder;
-    this.tool.position.x = 4.5;
-    this.tool.rotation.x = THREE.Math.degToRad(90);
-    this.direction = 1; // 0-> north ; 1-> east ; 2-> south ; 2-> west
-    this.bullet = 0;
+    //this.tool.position.y = -0.8;
+    //this.tool.position.z = this.holder;
+    //this.tool.position.x = 4.5;
+    //this.tool.rotation.x = THREE.Math.degToRad(90);
+    //this.direction = 1; // 0-> north ; 1-> east ; 2-> south ; 2-> west
+    //this.bullet = 0;
   }
 }
 class Axe{
   constructor(){
-    const handle = new THREE.Mesh(new THREE.CylinderGeometry(0.2, 0.2, 10, 100 ), new THREE.MeshBasicMaterial({map: bark_image}));
-    const head = new THREE.Mesh(new THREE.SphereGeometry(2, 50, 50 ), new THREE.MeshBasicMaterial({map: sword_image}));
-    head.position.z = 0;
-    head.position.y = -4;
-    this.tool = new THREE.Group();
-    this.tool.add(handle, head);
+    //const handle = new THREE.Mesh(new THREE.CylinderGeometry(0.2, 0.2, 10, 100 ), new THREE.MeshBasicMaterial({map: bark_image}));
+    //const head = new THREE.Mesh(new THREE.SphereGeometry(2, 50, 50 ), new THREE.MeshBasicMaterial({map: sword_image}));
+    //head.position.z = 0;
+    //head.position.y = -4;
+    //this.tool = new THREE.Group();
+    //this.tool.add(handle, head);
     this.range = 17
-    this.holder = -5;
-    this.tool.position.y += -0.8;
-    this.tool.position.z += this.holder;
-    this.tool.position.x += 4.5;
-    this.tool.rotation.x += THREE.Math.degToRad(90);
+    this.holder = -6;
+    //this.tool.position.y += -0.8;
+    //this.tool.position.z += this.holder;
+    //this.tool.position.x += 4.5;
+    //this.tool.rotation.x += THREE.Math.degToRad(90);
   }
 }
 class Polearm{
   constructor(){
-    this.tool = new THREE.Mesh(new THREE.CylinderGeometry(0.5, 0.2, 20, 100 ), new THREE.MeshBasicMaterial({map: bark_image}));
+    //this.tool = new THREE.Mesh(new THREE.CylinderGeometry(0.5, 0.2, 20, 100 ), new THREE.MeshBasicMaterial({map: bark_image}));
     this.range = 20;
     this.holder = -8;
-    this.tool.position.y = -0.8;
-    this.tool.position.z = this.holder;
-    this.tool.position.x = 4.5;
-    this.tool.rotation.x = THREE.Math.degToRad(90);
+    //this.tool.position.y = -0.8;
+    //this.tool.position.z = this.holder;
+    //this.tool.position.x = 4.5;
+    //this.tool.rotation.x = THREE.Math.degToRad(90);
   }
 }
 
@@ -60,6 +60,7 @@ export class Player {
     this.newposx = posx;
     this.newposz = posz;
     this.quadtree = quadtree;
+    this.acc = -0.5;
     this.accz = -0.5;
     this.accx = -0.5;
     this.decn = 0.005;
@@ -143,7 +144,7 @@ export class Player {
     this.player.position.z = this.posz;
     this.playerrange.position.x = this.posx;
     this.playerrange.position.z = this.posz;
-    this.weapons.forEach(e => { e.tool.position.x += this.posx; e.tool.position.z += this.posz; })
+    //this.weapons.forEach(e => { e.tool.position.x += this.posx; e.tool.position.z += this.posz; })
     this.scene.position.z -= this.posz;
     this.scene.position.x -= this.posx;
   }
@@ -153,44 +154,16 @@ export class Player {
     this.playerrange.position.x = this.posx;
     this.playerrange.position.z = this.posz;
   }
-  forward() {
-    this.velz = this.accz;
-    this.player.rotation.y = THREE.Math.degToRad(180);
-    this.weapons.forEach(e => { 
-      e.tool.rotation.z = THREE.Math.degToRad(0);
-      e.tool.position.x = this.player.position.x + 4.5;
-      e.tool.position.z = this.player.position.z + this.weapons[this.weapon].holder;
-    });    
+  forward(velz, velx) {
+    this.velz = velz;
+    this.velx = velx;
+    //this.weapons.forEach(e => { 
+    //  e.tool.rotation.z = THREE.Math.degToRad(0);
+    //  e.tool.position.x = this.player.position.x + 4.5;
+    //  e.tool.position.z = this.player.position.z + this.weapons[this.weapon].holder;
+    //});    
   }
-  backward() {
-    this.velz = -this.accz;
-    this.player.rotation.y = THREE.Math.degToRad(0);
-    this.weapons.forEach(e => {
-      e.tool.rotation.z = THREE.Math.degToRad(180);
-      e.tool.position.x = this.player.position.x - 4.5;
-      e.tool.position.z = this.player.position.z - this.weapons[this.weapon].holder;
-    });
-  }
-  left() {
-    this.velx = this.accx;
-    this.player.rotation.y = THREE.Math.degToRad(-90);
-    this.weapons.forEach(e => { 
-      e.tool.rotation.z = THREE.Math.degToRad(-90);
-      e.tool.position.x = this.player.position.x + this.weapons[this.weapon].holder;
-      e.tool.position.z = this.player.position.z - 4.5;
-    }); 
-  }
-  right() {
-    this.velx = -this.accx;
-    this.player.rotation.y = THREE.Math.degToRad(90);
-    this.weapons.forEach(e => { 
-      e.tool.rotation.z = THREE.Math.degToRad(90);
-      e.tool.position.x = this.player.position.x - this.weapons[this.weapon].holder;
-      e.tool.position.z = this.player.position.z + 4.5;
-    }); 
 
-
-  }
   move() {
     if(this.chunk.contains(this.player.position.z + this.velz, this.player.position.x + this.velx)) {
 
@@ -200,7 +173,7 @@ export class Player {
       this.player.position.x += this.velx;
       this.playerrange.position.z += this.velz;
       this.playerrange.position.x += this.velx;
-      this.weapons.forEach(e => { e.tool.position.x += this.velx; e.tool.position.z += this.velz; })
+      //this.weapons.forEach(e => { e.tool.position.x += this.velx; e.tool.position.z += this.velz; })
       this.scene.position.z -= this.velz;
       this.scene.position.x -= this.velx;
       if(this.velz !== 0){

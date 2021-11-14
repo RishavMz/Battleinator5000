@@ -26,8 +26,8 @@ export class Multiplayer{
               <ul>
                 <li>w : Accelerate forward</li>
                 <li>s : Accelerate backward</li>
-                <li>a : Accelerate leftward</li>
-                <li>d : Accelerate rightward</li>
+                <li>a : Turn left</li>
+                <li>d : Turn right</li>
                 <li>e : Previous Weapon</li>
                 <li>r : Next Weapon</li>
                 <li>space : Attack objects within range</li>
@@ -57,11 +57,13 @@ export class Multiplayer{
     this.pointanimate = 0;
     this.players = [];
     this.playermap = {};
+    this.radius = 25;
+    this.angle = 1.3;
 
     this.chunk = new Chunk(this.scene, 0, 0, 1024);
     this.chunk.draw();
     this.player = new Player(this.scene, this.qtree, this.chunk, this.username, Math.random()*1024 - 512, Math.random()*1024 - 512);
-    this.scene.add(this.player.weapons[0].tool);
+    //this.scene.add(this.player.weapons[0].tool);
     this.player.draw();
     this.socket.emit('joined', {id: this.player.id, username: this.player.username, posx: this.player.posx, posz: this.player.posz});
     this.playermap[this.player.id] = this.player;
@@ -130,6 +132,9 @@ export class Multiplayer{
     if(this.pointanimate%50 === 0){
         this.socket.emit('move', {id: this.player.id, username: this.player.username, posx: this.player.posx, posz: this.player.posz}); 
     }
+    this.camera.position.x = this.radius * Math.cos( this.angle );  
+    this.camera.position.z = this.radius * Math.sin( this.angle );
+
     this.controls.update();
     this.renderer.render(this.scene, this.camera);
     this.pointanimate++;
@@ -140,17 +145,17 @@ export class Multiplayer{
     var keyCode = event.which;
     //console.log(keyCode)
   if (keyCode == 87 ) { 
-    this.player.forward();     
+    this.player.forward(this.player.acc*Math.sin(this.angle),this.player.acc* Math.cos(-this.angle));     
     this.player.walking = 1;   
   } else if (keyCode == 83 ) {
-    this.player.backward();
+    this.player.forward(-this.player.acc*Math.sin(this.angle),-this.player.acc* Math.cos(-this.angle));     
     this.player.walking = 1;   
   } else if (keyCode == 65 ) {
-    this.player.left();
-    this.player.walking = 1;  
+    this.angle -= 0.1; 
+    this.player.player.rotateY(0.1);
   } else if (keyCode == 68 ) {
-    this.player.right();
-    this.player.walking = 1;  
+    this.angle += 0.1; 
+    this.player.player.rotateY(-0.1);
   } else if (keyCode == 32) {
       //console.log("Pressed",this.pointanimate)
       

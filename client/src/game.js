@@ -27,8 +27,8 @@ export class Game{
               <ul>
                 <li>w : Accelerate forward</li>
                 <li>s : Accelerate backward</li>
-                <li>a : Accelerate leftward</li>
-                <li>d : Accelerate rightward</li>
+                <li>a : Turn left</li>
+                <li>d : Turn right</li>
                 <li>e : Previous Weapon</li>
                 <li>r : Next Weapon</li>
                 <li>space : Attack objects within range</li>
@@ -63,13 +63,15 @@ export class Game{
     this.ENV = 'prod';
     this.TREE_COUNT = 10;
     this.ENEMY_COUNT = 20;
+    this.radius = 25;
+    this.angle = 1.3;
 
     this.chunk = new Chunk(this.scene, 0, 0, 1024);
     this.chunk.draw();
     this.qtree = new QuadTree(this.scene, 0, 0, 1024);
     this.player = new Player(this.scene, this.qtree, this.chunk, '', 0, 400);
     this.player.draw();
-    this.scene.add(this.player.weapons[this.player.weapon].tool);
+    //this.scene.add(this.player.weapons[this.player.weapon].tool);
     document.getElementById('label1').innerHTML= `SCORE : ${this.player.score} <br/> HEALTH : ${this.player.health}` ;
     document.getElementById(`item0`).style.borderColor="gold";
 
@@ -134,8 +136,11 @@ export class Game{
       this.player.leg2.rotation.x = (this.player.leg1.rotation.x+0.1)%0.6;
     }
     
+    this.camera.position.x = this.radius * Math.cos( this.angle );  
+    this.camera.position.z = this.radius * Math.sin( this.angle );
+
     if(this.weaponmove-->0){ this.player.player.rotation.y += THREE.Math.degToRad(60);  }
-    
+
     this.player.move();
     this.controls.update();
     this.renderer.render(this.scene, this.camera);
@@ -147,17 +152,17 @@ export class Game{
     var keyCode = event.which;
     //console.log(keyCode)
   if (keyCode == 87 ) { 
-    this.player.forward();     
+    this.player.forward(this.player.acc*Math.sin(this.angle),this.player.acc* Math.cos(-this.angle));     
     this.player.walking = 1;   
   } else if (keyCode == 83 ) {
-    this.player.backward();
+    this.player.forward(-this.player.acc*Math.sin(this.angle),-this.player.acc* Math.cos(-this.angle));     
     this.player.walking = 1;   
   } else if (keyCode == 65 ) {
-    this.player.left();
-    this.player.walking = 1;   
+    this.angle -= 0.1; 
+    this.player.player.rotateY(0.1);
   } else if (keyCode == 68 ) {
-    this.player.right();
-    this.player.walking = 1;   
+    this.angle += 0.1; 
+    this.player.player.rotateY(-0.1);
   } else if (keyCode == 32) {
     for(let i=0; i<this.nearby.length; i++) {
       this.weaponmove = 6;
@@ -179,15 +184,15 @@ export class Game{
       }
     } else if(keyCode == 69) {
       document.getElementById(`item${this.player.weapon}`).style.borderColor="black";
-      this.scene.remove(this.player.weapons[this.player.weapon].tool);
+      //this.scene.remove(this.player.weapons[this.player.weapon].tool);
       this.player.changeWeapon(-1);  
-      this.scene.add(this.player.weapons[this.player.weapon].tool);
+      //this.scene.add(this.player.weapons[this.player.weapon].tool);
       document.getElementById(`item${this.player.weapon}`).style.borderColor="gold";
     } else if(keyCode == 82) {
       document.getElementById(`item${this.player.weapon}`).style.borderColor="black";
-      this.scene.remove(this.player.weapons[this.player.weapon].tool);
+      //this.scene.remove(this.player.weapons[this.player.weapon].tool);
       player.changeWeapon(1);  
-      this.scene.add(this.player.weapons[this.player.weapon].tool);
+      //this.scene.add(this.player.weapons[this.player.weapon].tool);
       document.getElementById(`item${this.player.weapon}`).style.borderColor="gold";
     } else if(keyCode == 84) {
       let div = document.getElementById('label2');
