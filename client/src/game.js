@@ -126,9 +126,11 @@ export class Game{
     this.pointanimate = (this.pointanimate+1)%100;
     if(this.pointanimate%10 == 0){
       for(let i=0; i<this.nearby.length; i++) {
-        this.nearby[i].move();
+        this.nearby[i].move(this.player.posx, this.player.posz);
         if((Math.sqrt(Math.pow(this.player.posx-this.nearby[i].posx,2)+Math.pow(this.player.posz-this.nearby[i].posz,2))<=10)){
-          document.getElementById('label1').innerHTML= `SCORE : ${this.player.score} <br/> HEALTH : ${this.player.health--}` ;
+          if(document.getElementById('label1')){
+            document.getElementById('label1').innerHTML= `SCORE : ${this.player.score} <br/> HEALTH : ${this.player.health--}` ;
+          }
         }
       }
     }
@@ -192,7 +194,7 @@ export class Game{
     } else if(keyCode == 82) {
       document.getElementById(`item${this.player.weapon}`).style.borderColor="black";
       //this.scene.remove(this.player.weapons[this.player.weapon].tool);
-      player.changeWeapon(1);  
+      this.player.changeWeapon(1);  
       //this.scene.add(this.player.weapons[this.player.weapon].tool);
       document.getElementById(`item${this.player.weapon}`).style.borderColor="gold";
     } else if(keyCode == 84) {
