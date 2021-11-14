@@ -59,6 +59,7 @@ export class Multiplayer{
     this.playermap = {};
     this.radius = 25;
     this.angle = 1.3;
+    this.rotator = 0.05;
 
     this.chunk = new Chunk(this.scene, 0, 0, 1024);
     this.chunk.draw();
@@ -151,11 +152,11 @@ export class Multiplayer{
     this.player.forward(-this.player.acc*Math.sin(this.angle),-this.player.acc* Math.cos(-this.angle));     
     this.player.walking = 1;   
   } else if (keyCode == 65 ) {
-    this.angle -= 0.1; 
-    this.player.player.rotateY(0.1);
+    this.angle -= this.rotator; 
+    this.player.player.rotateY(this.rotator);
   } else if (keyCode == 68 ) {
-    this.angle += 0.1; 
-    this.player.player.rotateY(-0.1);
+    this.angle += this.rotator; 
+    this.player.player.rotateY(-this.rotator);
   } else if (keyCode == 32) {
       //console.log("Pressed",this.pointanimate)
       
