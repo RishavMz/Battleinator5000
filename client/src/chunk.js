@@ -2,11 +2,12 @@ import * as THREE from 'three';
 const texture = new THREE.TextureLoader();
 
 export class Chunk {
-    constructor(scene, posx, posz, side) {
+    constructor(scene, posx, posz, side, texture) {
         this.scene = scene;
         this.posx = posx;
         this.posz = posz;
         this.side = side;
+        this.texture = texture;
     }
     draw() {
 
@@ -14,7 +15,7 @@ export class Chunk {
         const sky_image = texture.load('https://raw.githubusercontent.com/RishavMz/3D_Battle_Arena/main/client/resources/sky.png');
         ground_image.wrapS = THREE.RepeatWrapping;
         ground_image.wrapT = THREE.RepeatWrapping;
-        ground_image.repeat.set(32, 32);
+        this.texture === 100? ground_image.repeat.set(32, 32) : ground_image.repeat.set(8, 8);
 
         const ground = new THREE.Mesh(new THREE.PlaneGeometry(this.side, this.side), new THREE.MeshBasicMaterial({map: ground_image}));
         const sky = new THREE.Mesh(new THREE.SphereGeometry(this.side/1.414, this.side, this.side), new THREE.MeshBasicMaterial({map: sky_image}));

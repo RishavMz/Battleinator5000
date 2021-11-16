@@ -93,7 +93,7 @@
   margin-top: 5%;
   border-radius: 25%;
   border: 1px solid grey;
-  padding: 5% 5% 5% 5%;
+  padding: 2.5% 5% 2.5% 5%;
   width: 20%;
   font-size: 20pt;
   box-shadow: 0px 0px 5px black;
@@ -116,6 +116,6 @@
 
 }
 .gamemode{
-  font-size: 16pt;
-  padding: 15px 15px 15px 15px;
+  font-size: 14pt;
+  padding: 10px 10px 10px 10px;
 }

@@ -10,9 +10,10 @@ import { Tree, Grass } from './objects';
 const BACKEND = "ws://127.0.0.1:5000";
 
 export class Game{
-  constructor(email, username){
+  constructor(email, username, texture){
     this.email = email;
     this.username = username;
+    this.texture = texture;
     this.animate = this.animate.bind(this);
     this.onDocumentKeyUp = this.onDocumentKeyUp.bind(this);
     this.onDocumentKeyDown = this.onDocumentKeyDown.bind(this);
@@ -67,25 +68,25 @@ export class Game{
     this.angle = 1.3;
     this.rotator = 0.05;
 
-    this.chunk = new Chunk(this.scene, 0, 0, 1024);
+    this.chunk = new Chunk(this.scene, 0, 0, 1024, this.texture);
     this.chunk.draw();
     this.qtree = new QuadTree(this.scene, 0, 0, 1024);
-    this.player = new Player(this.scene, this.qtree, this.chunk, '', 0, 400);
+    this.player = new Player(this.scene, this.qtree, this.chunk, '', 0, 400,this.texture);
     this.player.draw();
     //this.scene.add(this.player.weapons[this.player.weapon].tool);
     document.getElementById('label1').innerHTML= `SCORE : ${this.player.score} <br/> HEALTH : ${this.player.health}` ;
     document.getElementById(`item0`).style.borderColor="gold";
 
     for(let i=0; i<this.TREE_COUNT; i++) {
-      let tree = new Tree(this.scene, Math.random()*1024 - 512, Math.random()*1024 - 512);
+      let tree = new Tree(this.scene, Math.random()*1024 - 512, Math.random()*1024 - 512,this.texture);
       tree.draw();
     }
     for(let i=0; i<this.TREE_COUNT; i++) {
-      let tree = new Grass(this.scene, Math.random()*1024 - 512, Math.random()*1024 - 512);
+      let tree = new Grass(this.scene, Math.random()*1024 - 512, Math.random()*1024 - 512,this.texture);
       tree.draw();
     }
     for(let i=0; i<this.ENEMY_COUNT; i++) {
-      let temp = new Point(this.scene, this.qtree, i, Math.random()*1024 - 512, Math.random()*1024 - 512);
+      let temp = new Point(this.scene, this.qtree, i, Math.random()*1024 - 512, Math.random()*1024 - 512,this.texture);
       temp.draw();
       this.qtree.insert(temp);
     }

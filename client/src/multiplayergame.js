@@ -9,13 +9,14 @@ import { Tree, Grass } from './objects';
 const BACKEND = "ws://127.0.0.1:5000";
 
 export class Multiplayer{
-  constructor(email, username){
+  constructor(email, username, texture){
     alert('Backend server is on sick leave, hence we are unable to serve multiplayer environment now. Feel lonely here? You can still enjoy the single player mode ;)')
     this.email = email;
     this.username = username;
     this.animate = this.animate.bind(this);
     this.onDocumentKeyDown = this.onDocumentKeyDown.bind(this);
     this.backend = BACKEND;
+    this.texture = texture;
     this.socket = io(this.backend, { reconnectionDelayMax: 10000, auth: { email: this.email , username: this.username }});
 
 
@@ -61,9 +62,9 @@ export class Multiplayer{
     this.angle = 1.3;
     this.rotator = 0.05;
 
-    this.chunk = new Chunk(this.scene, 0, 0, 1024);
+    this.chunk = new Chunk(this.scene, 0, 0, 1024, this.texture);
     this.chunk.draw();
-    this.player = new Player(this.scene, this.qtree, this.chunk, this.username, Math.random()*1024 - 512, Math.random()*1024 - 512);
+    this.player = new Player(this.scene, this.qtree, this.chunk, this.username, Math.random()*1024 - 512, Math.random()*1024 - 512, this.texture);
     //this.scene.add(this.player.weapons[0].tool);
     this.player.draw();
     this.socket.emit('joined', {id: this.player.id, username: this.player.username, posx: this.player.posx, posz: this.player.posz});
@@ -90,7 +91,7 @@ export class Multiplayer{
           this.players.push(data);
           //console.log("Joined", data);
           if(data.id != this.player.id){
-            let player = new Player(this.scene, this.qtree, this.chunk, data.username, data.posx, data.posz);
+            let player = new Player(this.scene, this.qtree, this.chunk, data.username, data.posx, data.posz, this.texture);
             player.id = data.id;
             this.playermap[player.id] = player;
             player.multiplayerdraw();
@@ -100,7 +101,7 @@ export class Multiplayer{
         if(this.players.length === 1){
             data['id'].forEach((e)=>{
                 if(this.player.id !== e.id){
-                    let player = new Player(this.scene, this.qtree, this.chunk, e.username, e.posx, e.posz);
+                    let player = new Player(this.scene, this.qtree, this.chunk, e.username, e.posx, e.posz, this.texture);
                     player.id = e.id;
                     this.playermap[player.id] = player;
                     this.players.push(e);

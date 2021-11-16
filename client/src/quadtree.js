@@ -1,30 +1,31 @@
 import * as THREE from 'three';
 const texture = new THREE.TextureLoader();
+const head_img = texture.load('https://raw.githubusercontent.com/RishavMz/3D_Battle_Arena/main/client/resources/head.png');
+const limb_img = texture.load('https://raw.githubusercontent.com/RishavMz/3D_Battle_Arena/main/client/resources/limb.png');
+const body_img = texture.load('https://raw.githubusercontent.com/RishavMz/3D_Battle_Arena/main/client/resources/body.png');
+const metal_img = texture.load('https://raw.githubusercontent.com/RishavMz/3D_Battle_Arena/main/client/resources/metal.png');
+
 
 export class Point {
-    constructor(scene, qtree, id, posx, posz) {
+    constructor(scene, qtree, id, posx, posz,texture) {
         this.posx = posx;
         this.posz = posz;
         this.id = id;
         this.qtree = qtree;
         this.scene = scene;
+        this.texture = texture;
     }
     draw() {
-        const head_img = texture.load('https://raw.githubusercontent.com/RishavMz/3D_Battle_Arena/main/client/resources/head.png');
-        const body_img = texture.load('https://raw.githubusercontent.com/RishavMz/3D_Battle_Arena/main/client/resources/body.png');
-        const limb_img = texture.load('https://raw.githubusercontent.com/RishavMz/3D_Battle_Arena/main/client/resources/limb.png');
-        const metal_img = texture.load('https://raw.githubusercontent.com/RishavMz/3D_Battle_Arena/main/client/resources/metal.png');
-
-        const head = new THREE.Mesh(new THREE.SphereGeometry(1.5, 100, 100), new THREE.MeshBasicMaterial({map: head_img}));
-        const body = new THREE.Mesh(new THREE.CylinderGeometry(2, 1, 5, 100,100, false), new THREE.MeshBasicMaterial({map: body_img}));
+        const head = new THREE.Mesh(new THREE.SphereGeometry(1.5, this.texture,this.texture), new THREE.MeshBasicMaterial({map: head_img}));
+        const body = new THREE.Mesh(new THREE.CylinderGeometry(2, 1, 5, this.texture,this.texture, false), new THREE.MeshBasicMaterial({map: body_img}));
         const neck = new THREE.Mesh(new THREE.SphereGeometry(2, 100, 100,0, 720, 0, 1), new THREE.MeshBasicMaterial({map: head_img}));
-        const hand11 = new THREE.Mesh(new THREE.CylinderGeometry(0.5, 0.3, 4, 100,100, false), new THREE.MeshBasicMaterial({map: limb_img}));
-        const hand12 = new THREE.Mesh(new THREE.CylinderGeometry(0, 0.3, 5, 100,100, false), new THREE.MeshBasicMaterial({map: metal_img}));
-        const hand21 = new THREE.Mesh(new THREE.CylinderGeometry(0.5, 0.3, 4, 100,100, false), new THREE.MeshBasicMaterial({map: limb_img}));
-        const hand22 = new THREE.Mesh(new THREE.CylinderGeometry(0, 0.3, 5, 100,100, false), new THREE.MeshBasicMaterial({map: metal_img}));
-        const skirt = new THREE.Mesh(new THREE.CylinderGeometry(1, 1.8, 3, 100,100, false), new THREE.MeshBasicMaterial( {map: metal_img}));
-        const leg1 = new THREE.Mesh(new THREE.CylinderGeometry(0.5, 0.3, 5, 100,100, false), new THREE.MeshBasicMaterial({map: metal_img}));
-        const leg2 = new THREE.Mesh(new THREE.CylinderGeometry(0.5, 0.3, 5, 100,100, false), new THREE.MeshBasicMaterial({map: metal_img}));
+        const hand11 = new THREE.Mesh(new THREE.CylinderGeometry(0.5, 0.3, 4, this.texture,this.texture, false), new THREE.MeshBasicMaterial({map: limb_img}));
+        const hand12 = new THREE.Mesh(new THREE.CylinderGeometry(0, 0.3, 5, this.texture,this.texture, false), new THREE.MeshBasicMaterial({map: metal_img}));
+        const hand21 = new THREE.Mesh(new THREE.CylinderGeometry(0.5, 0.3, 4, this.texture,this.texture, false), new THREE.MeshBasicMaterial({map: limb_img}));
+        const hand22 = new THREE.Mesh(new THREE.CylinderGeometry(0, 0.3, 5, this.texture,this.texture, false), new THREE.MeshBasicMaterial({map: metal_img}));
+        const skirt = new THREE.Mesh(new THREE.CylinderGeometry(1, 1.8, 3, this.texture,this.texture, false), new THREE.MeshBasicMaterial( {map: metal_img}));
+        const leg1 = new THREE.Mesh(new THREE.CylinderGeometry(0.5, 0.3, 5, this.texture,this.texture, false), new THREE.MeshBasicMaterial({map: metal_img}));
+        const leg2 = new THREE.Mesh(new THREE.CylinderGeometry(0.5, 0.3, 5, this.texture,this.texture, false), new THREE.MeshBasicMaterial({map: metal_img}));
         hand11.position.x = 3;
         hand11.position.y = 0.8;
         hand12.position.y = -0.5;

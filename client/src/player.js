@@ -4,6 +4,11 @@ import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry.js';
 
 const texture = new THREE.TextureLoader();
 const floader = new FontLoader();
+const head_img = texture.load('https://raw.githubusercontent.com/RishavMz/3D_Battle_Arena/main/client/resources/player_head.png');
+const body_img = texture.load('https://raw.githubusercontent.com/RishavMz/3D_Battle_Arena/main/client/resources/player_body.png');
+const limb_img = texture.load('https://raw.githubusercontent.com/RishavMz/3D_Battle_Arena/main/client/resources/player_limb.png');
+const metal_img = texture.load('https://raw.githubusercontent.com/RishavMz/3D_Battle_Arena/main/client/resources/player_metal.png');
+      
 
 //const sword_image = texture.load('https://raw.githubusercontent.com/RishavMz/3D_Battle_Arena/main/client/resources/sword_hand.png');
 //const bark_image = texture.load('https://raw.githubusercontent.com/RishavMz/3D_Battle_Arena/main/client/resources/tree_bark.png');
@@ -50,7 +55,7 @@ class Polearm{
 }
 
 export class Player {
-  constructor(scene, quadtree, chunk, username, posx, posz) {
+  constructor(scene, quadtree, chunk, username, posx, posz, texture) {
     this.id = Math.floor(Math.random()*100000);
     this.username = username;
     this.scene = scene;
@@ -60,6 +65,7 @@ export class Player {
     this.newposx = posx;
     this.newposz = posz;
     this.quadtree = quadtree;
+    this.texture = texture;
     this.acc = -0.5;
     this.accz = -0.5;
     this.accx = -0.5;
@@ -76,21 +82,17 @@ export class Player {
     this.score = 0;
     this.health = 100;
 
-      const head_img = texture.load('https://raw.githubusercontent.com/RishavMz/3D_Battle_Arena/main/client/resources/player_head.png');
-      const body_img = texture.load('https://raw.githubusercontent.com/RishavMz/3D_Battle_Arena/main/client/resources/player_body.png');
-      const limb_img = texture.load('https://raw.githubusercontent.com/RishavMz/3D_Battle_Arena/main/client/resources/player_limb.png');
-      const metal_img = texture.load('https://raw.githubusercontent.com/RishavMz/3D_Battle_Arena/main/client/resources/player_metal.png');
-      const head = new THREE.Mesh(new THREE.SphereGeometry(1.5, 100, 100), new THREE.MeshBasicMaterial({map: head_img}));
-      const body = new THREE.Mesh(new THREE.CylinderGeometry(2, 1, 5, 100,100, false), new THREE.MeshBasicMaterial({map: body_img}));
-      const neck = new THREE.Mesh(new THREE.SphereGeometry(2, 100, 100,0, 720, 0, 1), new THREE.MeshBasicMaterial({map: head_img}));
-      const hand1 = new THREE.Mesh(new THREE.CylinderGeometry(0.5, 0.3, 4, 100,100, false), new THREE.MeshBasicMaterial({map: limb_img}));
-      const hand2 = new THREE.Mesh(new THREE.CylinderGeometry(0.5, 0.3, 4, 100,100, false), new THREE.MeshBasicMaterial({map: limb_img}));
-      const skirt = new THREE.Mesh(new THREE.CylinderGeometry(1, 1.8, 3, 100,100, false), new THREE.MeshBasicMaterial( {map: metal_img}));
-      const leg1 = new THREE.Mesh(new THREE.CylinderGeometry(0.5, 0.3, 5, 100,100, false), new THREE.MeshBasicMaterial({map: metal_img}));
-      const leg2 = new THREE.Mesh(new THREE.CylinderGeometry(0.5, 0.3, 5, 100,100, false), new THREE.MeshBasicMaterial({map: metal_img}));
-      const chestGuard = new THREE.Mesh(new THREE.TorusGeometry(1.8, 0.8, 10, 100, 10), new THREE.MeshBasicMaterial({map: metal_img}));
-      const waistGuard = new THREE.Mesh(new THREE.TorusGeometry(0.8, 0.8, 10, 100, 10), new THREE.MeshBasicMaterial({map: metal_img}));
-      const headGuard = new THREE.Mesh(new THREE.TorusGeometry(0.8, 0.8, 10, 100, 10), new THREE.MeshBasicMaterial({map: metal_img}));
+      const head = new THREE.Mesh(new THREE.SphereGeometry(1.5, this.texture, this.texture), new THREE.MeshBasicMaterial({map: head_img}));
+      const body = new THREE.Mesh(new THREE.CylinderGeometry(2, 1, 5, this.texture,this.texture, false), new THREE.MeshBasicMaterial({map: body_img}));
+      const neck = new THREE.Mesh(new THREE.SphereGeometry(2, this.texture,this.texture,0, 72, 0, 1), new THREE.MeshBasicMaterial({map: head_img}));
+      const hand1 = new THREE.Mesh(new THREE.CylinderGeometry(0.5, 0.3, 4, this.texture,this.texture, false), new THREE.MeshBasicMaterial({map: limb_img}));
+      const hand2 = new THREE.Mesh(new THREE.CylinderGeometry(0.5, 0.3, 4, this.texture,this.texture, false), new THREE.MeshBasicMaterial({map: limb_img}));
+      const skirt = new THREE.Mesh(new THREE.CylinderGeometry(1, 1.8, 3, this.texture,this.texture, false), new THREE.MeshBasicMaterial( {map: metal_img}));
+      const leg1 = new THREE.Mesh(new THREE.CylinderGeometry(0.5, 0.3, 5, this.texture,this.texture, false), new THREE.MeshBasicMaterial({map: metal_img}));
+      const leg2 = new THREE.Mesh(new THREE.CylinderGeometry(0.5, 0.3, 5, this.texture,this.texture, false), new THREE.MeshBasicMaterial({map: metal_img}));
+      const chestGuard = new THREE.Mesh(new THREE.TorusGeometry(1.8, 0.8, this.texture,this.texture,this.texture), new THREE.MeshBasicMaterial({map: metal_img}));
+      const waistGuard = new THREE.Mesh(new THREE.TorusGeometry(0.8, 0.8, this.texture,this.texture,this.texture), new THREE.MeshBasicMaterial({map: metal_img}));
+      const headGuard = new THREE.Mesh(new THREE.TorusGeometry(0.8, 0.8, this.texture,this.texture,this.texture), new THREE.MeshBasicMaterial({map: metal_img}));
       chestGuard.position.y += 2;
       waistGuard.position.y -= 1;
       headGuard.position.y += 5;

@@ -9,9 +9,16 @@ document.getElementById('root').innerHTML = `<div>
         <input type="text" class="input" name="username" id="username" required/><br/><br/>
         <label>EMAIL</label><br/>
         <input type="email" class="input" name="email" id="email" required/><br/><br/>
+        <label>GameMode </label><br/>
         <select class="gamemode" name="gamemode" id="gamemode">
             <option value="singleplayer">Singleplayer</option>
             <option value="multiplayer">Multiplayer</option>
+        </select>
+        <br/><br/>
+        <label>Graphics </label><br/>
+        <select class="gamemode" name="texture" id="texture">
+            <option value="0">LOW</option>
+            <option value="1">HIGH</option>
         </select>
         <br/><br/><br/>
         <button class="btn" type="submit" id="loginbuttonsp">Enter World</button>
@@ -23,6 +30,7 @@ document.getElementById('loginform').onsubmit= (e)=>{
     const username = document.getElementById('username').value;
     const email = document.getElementById('email').value;
     const gamemode = document.getElementById('gamemode').value;
+    const texture = (document.getElementById('texture').value === '1'?100:10);
     document.getElementById('root').innerHTML = `<div class="loader" id='loader'>
         <center><div class="loadmover"></div></center>
         <br/><br/>
@@ -30,10 +38,10 @@ document.getElementById('loginform').onsubmit= (e)=>{
     </div>`;
     var game;
     if(gamemode === 'singleplayer'){
-        game = new Game(email, username);
+        game = new Game(email, username, texture);
         game.animate();
     } else {
-        game = new Multiplayer(email, username);
+        game = new Multiplayer(email, username, texture);
         game.animate();
     }
 
