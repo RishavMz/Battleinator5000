@@ -19,6 +19,7 @@ export class Chunk {
 
         const ground = new THREE.Mesh(new THREE.PlaneGeometry(this.side, this.side), new THREE.MeshBasicMaterial({map: ground_image}));
         const sky = new THREE.Mesh(new THREE.SphereGeometry(this.side/1.414, this.side, this.side), new THREE.MeshBasicMaterial({map: sky_image}));
+        this.ground = ground;
         sky.material.side = THREE.BackSide;
         ground.rotation.x = THREE.Math.degToRad(-90);
         sky.rotation.y = THREE.Math.degToRad(90);

@@ -32,7 +32,8 @@ export class Game{
                 <li>d : Turn right</li>
                 <li>e : Previous Weapon</li>
                 <li>r : Next Weapon</li>
-                <li>space : Attack objects within range</li>
+                <li>m : Swing your weapon</li>
+                <li>space : Shoot projectile</li>
                 <li>t : Toggle tutorial on/off</li>
               </ul>
               <br/>
@@ -67,7 +68,11 @@ export class Game{
     this.radius = 25;
     this.angle = 1.3;
     this.rotator = 0.05;
+    this.bullet = 0;
 
+    this.chunkbase = new Chunk(this.scene, 0, 0, 1500, this.texture);
+    this.chunkbase.draw();
+    this.chunkbase.ground.position.y -= 0.5
     this.chunk = new Chunk(this.scene, 0, 0, 1024, this.texture);
     this.chunk.draw();
     this.qtree = new QuadTree(this.scene, 0, 0, 1024);
@@ -123,7 +128,30 @@ export class Game{
   animate() {
     requestAnimationFrame(this.animate);
   
-    //redefine this thing to be accessed from server
+    if(this.bullet === 1){
+      this.player.bullet.move();
+      if(this.player.bullet.posy<=-10){
+        this.bullet = 0;
+      } else {
+        for(let i=0; i<this.nearby.length; i++) {
+          if((Math.sqrt(Math.pow(this.player.bullet.posx-this.nearby[i].posx,2)+Math.pow(this.player.bullet.posz-this.nearby[i].posz,2))<=2)){
+            const id = this.nearby[i].id;
+            // To be removed from all
+            this.qtree.remove(this.nearby[i]);
+            this.scene.remove(this.nearby[i].data)
+            let newpt = new Point(this.scene, this.qtree, id, Math.random()*1024 - 512, Math.random()*1024 - 512);
+            // To be inserted into all
+            this.qtree.insert(newpt);
+            newpt.draw();
+            document.getElementById('label1').innerHTML= `SCORE : ${this.player.score++} <br/> HEALTH : ${this.player.health}` ;
+            if(this.ENV === 'dev'){
+              this.qtree.draw()
+              console.log(this.qtree);
+              }
+          }
+        }
+      }
+    }    
     this.pointanimate = (this.pointanimate+1)%100;
     if(this.pointanimate%10 == 0){
       for(let i=0; i<this.nearby.length; i++) {
@@ -149,12 +177,12 @@ export class Game{
     this.controls.update();
     this.renderer.render(this.scene, this.camera);
   }
-
+    
 
 
   onDocumentKeyDown(event) {
     var keyCode = event.which;
-    //console.log(keyCode)
+    console.log(keyCode)
   if (keyCode == 87 ) { 
     this.player.forward(this.player.acc*Math.sin(this.angle),this.player.acc* Math.cos(-this.angle));     
     this.player.walking = 1;   
@@ -168,6 +196,13 @@ export class Game{
     this.angle += this.rotator; 
     this.player.player.rotateY(-this.rotator);
   } else if (keyCode == 32) {
+      if(this.player.bulletloaded === 1){
+        this.scene.add(this.player.bullet.data);
+        this.bullet = 1;
+        this.player.bullet.moveTo(this.player.player.position.x, 5, this.player.player.position.z);
+        this.player.bullet.forward(5*Math.sin(this.angle),5* Math.cos(-this.angle));
+      }
+  } else if (keyCode == 77) {
     for(let i=0; i<this.nearby.length; i++) {
       this.weaponmove = 6;
       if(Math.sqrt(Math.pow(this.player.posx-this.nearby[i].posx,2)+Math.pow(this.player.posz-this.nearby[i].posz,2))<=this.player.weapons[this.player.weapon].range){

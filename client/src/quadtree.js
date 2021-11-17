@@ -18,7 +18,7 @@ export class Point {
     draw() {
         const head = new THREE.Mesh(new THREE.SphereGeometry(1.5, this.texture,this.texture), new THREE.MeshBasicMaterial({map: head_img}));
         const body = new THREE.Mesh(new THREE.CylinderGeometry(2, 1, 5, this.texture,this.texture, false), new THREE.MeshBasicMaterial({map: body_img}));
-        const neck = new THREE.Mesh(new THREE.SphereGeometry(2, 100, 100,0, 720, 0, 1), new THREE.MeshBasicMaterial({map: head_img}));
+        const neck = new THREE.Mesh(new THREE.SphereGeometry(2, this.texture, this.texture, 10, 10, 0, 1), new THREE.MeshBasicMaterial({map: head_img}));
         const hand11 = new THREE.Mesh(new THREE.CylinderGeometry(0.5, 0.3, 4, this.texture,this.texture, false), new THREE.MeshBasicMaterial({map: limb_img}));
         const hand12 = new THREE.Mesh(new THREE.CylinderGeometry(0, 0.3, 5, this.texture,this.texture, false), new THREE.MeshBasicMaterial({map: metal_img}));
         const hand21 = new THREE.Mesh(new THREE.CylinderGeometry(0.5, 0.3, 4, this.texture,this.texture, false), new THREE.MeshBasicMaterial({map: limb_img}));

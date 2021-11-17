@@ -54,6 +54,42 @@ class Polearm{
   }
 }
 
+export class Bullet {
+  constructor(scene, posx, posy, posz){
+    this.scene = scene;
+    this.posx = posx;
+    this.posy = posy;
+    this.posz = posz;
+    this.velx = 0;
+    this.vely = 1;
+    this.velz = 0;
+    this.data = new THREE.Mesh(new THREE.SphereGeometry(2, 10, 10), new THREE.MeshBasicMaterial({color: 0xffffff}));
+    this.data.position.x = this.posx;
+    this.data.position.y = this.posy;
+    this.data.position.z = this.posz;
+  }
+  forward(velz, velx) {
+    this.velz = velz;
+    this.velx = velx;
+  }
+  move(){
+    this.posx = this.posx - this.velx;
+    this.posy = this.posy - this.vely;
+    this.posz = this.posz - this.velz;
+    this.data.position.x = this.posx;
+    this.data.position.y = this.posy;
+    this.data.position.z = this.posz;  
+  }
+  moveTo(posx, posy, posz){
+    this.posx = posx;
+    this.posy = posy;
+    this.posz = posz;
+    this.data.position.x = this.posx;
+    this.data.position.y = this.posy;
+    this.data.position.z = this.posz;  
+  }
+}
+
 export class Player {
   constructor(scene, quadtree, chunk, username, posx, posz, texture) {
     this.id = Math.floor(Math.random()*100000);
@@ -81,7 +117,9 @@ export class Player {
     this.weapon = 0;
     this.score = 0;
     this.health = 100;
-
+    this.bullet = new Bullet(this.scene, this.posx, 20, this.posz);
+    this.bulletloaded = 1;
+    
       const head = new THREE.Mesh(new THREE.SphereGeometry(1.5, this.texture, this.texture), new THREE.MeshBasicMaterial({map: head_img}));
       const body = new THREE.Mesh(new THREE.CylinderGeometry(2, 1, 5, this.texture,this.texture, false), new THREE.MeshBasicMaterial({map: body_img}));
       const neck = new THREE.Mesh(new THREE.SphereGeometry(2, this.texture,this.texture,0, 72, 0, 1), new THREE.MeshBasicMaterial({map: head_img}));
