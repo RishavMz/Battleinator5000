@@ -90,7 +90,7 @@
   border: 5px solid black;
 }
 .login{
-  margin-top: 5%;
+  padding-top: 15%;
   border-radius: 25%;
   border: 1px solid grey;
   padding: 2.5% 5% 2.5% 5%;
@@ -100,8 +100,8 @@
   font-family: 'Courier New', Courier, monospace;
 }
 .input{
-  height: 25pt;
-  width: 200pt;
+  height: 10%;
+  width: 75%;
   border-radius: 5px;
   padding: 5px 5px 5px 5px;
   font-size: 16pt;
@@ -118,4 +118,12 @@
 .gamemode{
   font-size: 14pt;
   padding: 10px 10px 10px 10px;
+  width: 50%;
+}
+.menu{
+  background-image: url('./resources/menu.jpeg');
+  background-repeat: no-repeat;
+  height: 97vh;
+  width: 98vw;
+  margin-top: 0px;
 }

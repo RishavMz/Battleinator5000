@@ -3,19 +3,20 @@ import { Multiplayer } from './src/multiplayergame';
 import './style.css'
 
 
-document.getElementById('root').innerHTML = `<div>
+document.getElementById('root').innerHTML = `<div class="menu">
+    <br/><br/><br/>
     <center><form class="login" id="loginform">
         <label>USERNAME</label><br/>
         <input type="text" class="input" name="username" id="username" required/><br/><br/>
         <label>EMAIL</label><br/>
         <input type="email" class="input" name="email" id="email" required/><br/><br/>
-        <label>GameMode </label><br/>
+        <label>GameMode </label>
         <select class="gamemode" name="gamemode" id="gamemode">
             <option value="singleplayer">Singleplayer</option>
             <option value="multiplayer">Multiplayer</option>
         </select>
         <br/><br/>
-        <label>Graphics </label><br/>
+        <label>Graphics </label>
         <select class="gamemode" name="texture" id="texture">
             <option value="0">LOW</option>
             <option value="1">HIGH</option>
