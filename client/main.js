@@ -18,8 +18,8 @@ document.getElementById('root').innerHTML = `<div class="menu">
         <br/><br/>
         <label>Graphics </label>
         <select class="gamemode" name="texture" id="texture">
-            <option value="0">LOW</option>
             <option value="1">HIGH</option>
+            <option value="0">LOW</option>
         </select>
         <br/><br/><br/>
         <button class="btn" type="submit" id="loginbuttonsp">Enter World</button>

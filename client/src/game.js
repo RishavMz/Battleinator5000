@@ -70,9 +70,6 @@ export class Game{
     this.rotator = 0.05;
     this.bullet = 0;
 
-    this.chunkbase = new Chunk(this.scene, 0, 0, 1500, this.texture);
-    this.chunkbase.draw();
-    this.chunkbase.ground.position.y -= 0.5
     this.chunk = new Chunk(this.scene, 0, 0, 1024, this.texture);
     this.chunk.draw();
     this.qtree = new QuadTree(this.scene, 0, 0, 1024);
@@ -152,6 +149,7 @@ export class Game{
         }
       }
     }    
+    this.chunk.water.rotation.z += 0.001;
     this.pointanimate = (this.pointanimate+1)%100;
     if(this.pointanimate%10 == 0){
       for(let i=0; i<this.nearby.length; i++) {

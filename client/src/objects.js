@@ -49,6 +49,7 @@ export class Tree{
       this.data.add(this.bark,this.top,this.top1,this.top2,this.top3,this.top4);
       this.data.position.x = this.posx;
       this.data.position.z = this.posz;
+      this.data.position.y = -2;
       this.scene.add(this.data);
     }
   }
