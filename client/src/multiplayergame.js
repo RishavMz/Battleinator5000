@@ -29,9 +29,7 @@ export class Multiplayer{
                 <li>s : Accelerate backward</li>
                 <li>a : Turn left</li>
                 <li>d : Turn right</li>
-                <li>e : Previous Weapon</li>
-                <li>r : Next Weapon</li>
-                <li>space : Attack objects within range</li>
+                <li>space : Throw projectile</li>
                 <li>t : Toggle tutorial on/off</li>
               </ul>
               <br/>
@@ -61,6 +59,7 @@ export class Multiplayer{
     this.radius = 25;
     this.angle = 1.3;
     this.rotator = 0.05;
+    this.bullet = 0;
 
     this.chunk = new Chunk(this.scene, 0, 0, 1024, this.texture);
     this.chunk.draw();
@@ -130,7 +129,15 @@ export class Multiplayer{
       if(e.id !== this.player.id){
         this.playermap[e.id].multiplayermover();
       }
-    })
+    });
+
+    if(this.bullet === 1){
+      this.player.bullet.move();
+      if(this.player.bullet.posy<=-10){
+        this.bullet = 0;
+      }
+    }    
+
     if(this.pointanimate%50 === 0){
         this.socket.emit('move', {id: this.player.id, username: this.player.username, posx: this.player.posx, posz: this.player.posz}); 
     }
@@ -158,7 +165,14 @@ export class Multiplayer{
   } else if (keyCode == 68 ) {
     this.angle += this.rotator; 
     this.player.player.rotateY(-this.rotator);
-  } else if (keyCode == 32) {
+  }else if (keyCode == 32) {
+      if(this.player.bulletloaded === 1){
+        this.scene.add(this.player.bullet.data);
+        this.bullet = 1;
+        this.player.bullet.moveTo(this.player.player.position.x, 5, this.player.player.position.z);
+        this.player.bullet.forward(5*Math.sin(this.angle),5* Math.cos(-this.angle));
+      }
+  } else if (keyCode == 77) {
       //console.log("Pressed",this.pointanimate)
       
         document.getElementById('label1').innerHTML= `SCORE : ${this.player.score++} <br/> HEALTH : ${this.player.health}` ;

@@ -182,7 +182,7 @@ export class Game{
 
   onDocumentKeyDown(event) {
     var keyCode = event.which;
-    console.log(keyCode)
+    //console.log(keyCode)
   if (keyCode == 87 ) { 
     this.player.forward(this.player.acc*Math.sin(this.angle),this.player.acc* Math.cos(-this.angle));     
     this.player.walking = 1;   
