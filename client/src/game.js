@@ -1,7 +1,7 @@
 import '../style.css';
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
-import io from "socket.io-client";
+//import io from "socket.io-client";
 import { Chunk } from './chunk';
 import { Player } from './player';
 import { Point, QuadTree } from './quadtree';
@@ -18,7 +18,7 @@ export class Game{
     this.onDocumentKeyUp = this.onDocumentKeyUp.bind(this);
     this.onDocumentKeyDown = this.onDocumentKeyDown.bind(this);
     this.backend = BACKEND;
-    this.socket = io(this.backend, { reconnectionDelayMax: 10000, auth: { email: this.email , username: this.username }});
+    //this.socket = io(this.backend, { reconnectionDelayMax: 10000, auth: { email: this.email , username: this.username }});
 
 
     document.getElementById('root').innerHTML = `
@@ -104,14 +104,8 @@ export class Game{
       if(this.ENV === 'dev'){
         javascript:(function(){var script=document.createElement('script');script.onload=function(){var stats=new Stats();document.body.appendChild(stats.dom);requestAnimationFrame(function loop(){stats.update();requestAnimationFrame(loop)});};script.src='//mrdoob.github.io/stats.js/build/stats.min.js';document.head.appendChild(script);})()
       }
+    this.scene.fog = new THREE.FogExp2(0xdfe9f3, 0.005);
 
-      //this.socket.emit('destroyed', 'point_id');
-      this.socket.on('points', (data)=>{
-        const pts= "list of points";
-      });
-      this.socket.on('data', (data)=>{
-        console.log(data);
-      })
   }
 
   animate() {
@@ -237,7 +231,7 @@ export class Game{
   }
 
   gameover(){
-    this.socket.close();
+    //this.socket.close();
     cancelAnimationFrame(this.animate);
   }
 }

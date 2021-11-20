@@ -20,6 +20,9 @@ export class Chunk {
         ground_image.wrapS = THREE.RepeatWrapping;
         ground_image.wrapT = THREE.RepeatWrapping;
         this.texture === 100? ground_image.repeat.set(64, 64) : ground_image.repeat.set(8, 8);
+        sky_image.wrapS = THREE.RepeatWrapping;
+        sky_image.wrapT = THREE.RepeatWrapping;
+        this.texture === 100? sky_image.repeat.set(16, 16) : sky_image.repeat.set(4, 4);
         ground_image1.wrapS = THREE.RepeatWrapping;
         ground_image1.wrapT = THREE.RepeatWrapping;
         this.texture === 100? ground_image1.repeat.set(64, 64) : ground_image1.repeat.set(8, 8);
@@ -33,7 +36,7 @@ export class Chunk {
         ground.rotation.x = THREE.Math.degToRad(-90);
         
         const ground1 = new THREE.Mesh(new THREE.PlaneBufferGeometry(2048, 2048), new THREE.MeshBasicMaterial({map: ground_image1}));
-        const sky = new THREE.Mesh(new THREE.SphereBufferGeometry(this.side/1.414, this.side, this.side), new THREE.MeshBasicMaterial({map: sky_image}));
+        const sky = new THREE.Mesh(new THREE.SphereBufferGeometry(this.side/1.2, this.side, this.side), new THREE.MeshBasicMaterial({map: sky_image}));
         this.ground = ground;
         this.water = ground1;
         ground1.position.y = -12;
