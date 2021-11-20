@@ -242,7 +242,6 @@ export class Player {
     this.newposz = posz;
   }
   multiplayermover(){
-    console.log("called")
     //this.player.position.x = this.newposx;
     //this.player.position.z = this.newposz;
     if(this.player.position.x - this.newposx>1){

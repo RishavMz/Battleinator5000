@@ -51,8 +51,6 @@ export class Multiplayer{
     //this.scene.add(gridHelper); 
     this.controls = new OrbitControls(this.camera, this.renderer.domElement);
     this.ENV = 'prod';
-    this.TREE_COUNT = 10;
-    this.ENEMY_COUNT = 20;
     this.pointanimate = 0;
     this.players = [];
     this.playermap = {};
@@ -61,7 +59,7 @@ export class Multiplayer{
     this.rotator = 0.05;
     this.bullet = 0;
 
-    this.chunk = new Chunk(this.scene, 0, 0, 1024, this.texture);
+    this.chunk = new Chunk(this.scene, 0, 0, 1024, this.texture, 10);
     this.chunk.draw();
     this.player = new Player(this.scene, this.qtree, this.chunk, this.username, Math.random()*1024 - 512, Math.random()*1024 - 512, this.texture);
     //this.scene.add(this.player.weapons[0].tool);

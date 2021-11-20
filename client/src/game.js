@@ -63,15 +63,15 @@ export class Game{
     this.weaponmove = 0;
     this.pointanimate = 0;
     this.ENV = 'prod';
-    this.TREE_COUNT = 10;
     this.ENEMY_COUNT = 20;
     this.radius = 25;
     this.angle = 1.3;
     this.rotator = 0.05;
     this.bullet = 0;
 
-    this.chunk = new Chunk(this.scene, 0, 0, 1024, this.texture);
+    this.chunk = new Chunk(this.scene, 0, 0, 1024, this.texture, 10);
     this.chunk.draw();
+    this.chunk.drawObjects();
     this.qtree = new QuadTree(this.scene, 0, 0, 1024);
     this.player = new Player(this.scene, this.qtree, this.chunk, '', 0, 400,this.texture);
     this.player.draw();
@@ -79,14 +79,6 @@ export class Game{
     document.getElementById('label1').innerHTML= `SCORE : ${this.player.score} <br/> HEALTH : ${this.player.health}` ;
     document.getElementById(`item0`).style.borderColor="gold";
 
-    for(let i=0; i<this.TREE_COUNT; i++) {
-      let tree = new Tree(this.scene, Math.random()*1024 - 512, Math.random()*1024 - 512,this.texture);
-      tree.draw();
-    }
-    for(let i=0; i<this.TREE_COUNT; i++) {
-      let tree = new Grass(this.scene, Math.random()*1024 - 512, Math.random()*1024 - 512,this.texture);
-      tree.draw();
-    }
     for(let i=0; i<this.ENEMY_COUNT; i++) {
       let temp = new Point(this.scene, this.qtree, i, Math.random()*1024 - 512, Math.random()*1024 - 512,this.texture);
       temp.draw();

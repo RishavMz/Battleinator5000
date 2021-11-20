@@ -1,13 +1,16 @@
 import * as THREE from 'three';
+import { Tree, Grass } from './objects';
+
 const texture = new THREE.TextureLoader();
 
 export class Chunk {
-    constructor(scene, posx, posz, side, texture) {
+    constructor(scene, posx, posz, side, texture, objects) {
         this.scene = scene;
         this.posx = posx;
         this.posz = posz;
         this.side = side;
         this.texture = texture;
+        this.objects = objects;
     }
     draw() {
 
@@ -46,6 +49,17 @@ export class Chunk {
         sky.position.y = 20;
         this.scene.add(ground, ground1);
         this.scene.add(sky);
+    }
+
+    drawObjects() {
+        for(let i=0; i<this.objects; i++) {
+            let grass = new Tree(this.scene, Math.random()*1024 - 512, Math.random()*1024 - 512,this.texture);
+            grass.draw();
+          }
+          for(let i=0; i<this.objects; i++) {
+            let tree = new Grass(this.scene, Math.random()*1024 - 512, Math.random()*1024 - 512,this.texture);
+            tree.draw();
+          }
     }
     contains(posx, posz) {
         if(posx > this.posx - this.side/2 && posx < this.posx + this.side/2 &&

@@ -12,10 +12,10 @@ export class Grass{
         this.texture = texture;
     }
     draw(){
-        this.top  = new THREE.Mesh( new THREE.SphereBufferGeometry( 12, 10, 10, this.texture,this.texture,this.texture,this.texture), new THREE.MeshBasicMaterial( {map: bush_image} ) );
-        this.top.position.y -= 9.2;
+        const top  = new THREE.Mesh( new THREE.SphereBufferGeometry( 12, 10, 10, this.texture,this.texture,this.texture,this.texture), new THREE.MeshBasicMaterial( {map: bush_image} ) );
+        top.position.y -= 9.2;
         this.data = new THREE.Group();
-        this.data.add(this.top);
+        this.data.add(top);
         this.data.position.x = this.posx;
         this.data.position.z = this.posz;
         this.scene.add(this.data);
@@ -30,23 +30,23 @@ export class Tree{
       this.texture = texture;
     }
     draw() {
-      this.bark    = new THREE.Mesh( new THREE.CylinderBufferGeometry( 1.6, 1.6, 16 ), new THREE.MeshBasicMaterial( {map: bark_image} ) );
-      this.top  = new THREE.Mesh( new THREE.SphereBufferGeometry( 8, 10, 10, this.texture,this.texture,this.texture,this.texture), new THREE.MeshBasicMaterial( {map: canopy_image} ) );
-      this.top1 = new THREE.Mesh( new THREE.SphereBufferGeometry( 8, 10, 10, this.texture,this.texture,this.texture,this.texture), new THREE.MeshBasicMaterial( {map: canopy_image} ) );
-      this.top2 = new THREE.Mesh( new THREE.SphereBufferGeometry( 8, 10, 10, this.texture,this.texture,this.texture,this.texture), new THREE.MeshBasicMaterial( {map: canopy_image} ) );
-      this.top3 = new THREE.Mesh( new THREE.SphereBufferGeometry( 8, 10, 10, this.texture,this.texture,this.texture,this.texture), new THREE.MeshBasicMaterial( {map: canopy_image} ) );
-      this.top4 = new THREE.Mesh( new THREE.SphereBufferGeometry( 8, 10, 10, this.texture,this.texture,this.texture,this.texture), new THREE.MeshBasicMaterial( {map: canopy_image} ) );
-      this.top.position.y += 11.2;
-      this.top1.position.x += 2;
-      this.top2.position.x -= 2;
-      this.top3.position.z += 2;
-      this.top4.position.z -= 2;
-      this.top1.position.y += 10;
-      this.top2.position.y += 10;
-      this.top3.position.y += 10;
-      this.top4.position.y += 10;
+      const bark    = new THREE.Mesh( new THREE.CylinderBufferGeometry( 1.6, 1.6, 16 ), new THREE.MeshBasicMaterial( {map: bark_image} ) );
+      const top  = new THREE.Mesh( new THREE.SphereBufferGeometry( 8, 10, 10, this.texture,this.texture,this.texture,this.texture), new THREE.MeshBasicMaterial( {map: canopy_image} ) );
+      const top1 = new THREE.Mesh( new THREE.SphereBufferGeometry( 8, 10, 10, this.texture,this.texture,this.texture,this.texture), new THREE.MeshBasicMaterial( {map: canopy_image} ) );
+      const top2 = new THREE.Mesh( new THREE.SphereBufferGeometry( 8, 10, 10, this.texture,this.texture,this.texture,this.texture), new THREE.MeshBasicMaterial( {map: canopy_image} ) );
+      const top3 = new THREE.Mesh( new THREE.SphereBufferGeometry( 8, 10, 10, this.texture,this.texture,this.texture,this.texture), new THREE.MeshBasicMaterial( {map: canopy_image} ) );
+      const top4 = new THREE.Mesh( new THREE.SphereBufferGeometry( 8, 10, 10, this.texture,this.texture,this.texture,this.texture), new THREE.MeshBasicMaterial( {map: canopy_image} ) );
+      top.position.y += 11.2;
+      top1.position.x += 2;
+      top2.position.x -= 2;
+      top3.position.z += 2;
+      top4.position.z -= 2;
+      top1.position.y += 10;
+      top2.position.y += 10;
+      top3.position.y += 10;
+      top4.position.y += 10;
       this.data = new THREE.Group();
-      this.data.add(this.bark,this.top,this.top1,this.top2,this.top3,this.top4);
+      this.data.add(bark,top,top1,top2,top3,top4);
       this.data.position.x = this.posx;
       this.data.position.z = this.posz;
       this.data.position.y = -2;
