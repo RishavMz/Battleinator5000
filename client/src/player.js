@@ -9,48 +9,48 @@ const body_img = texture.load('https://raw.githubusercontent.com/RishavMz/3D_Bat
 const limb_img = texture.load('https://raw.githubusercontent.com/RishavMz/3D_Battle_Arena/main/client/resources/player_limb.png');
 const metal_img = texture.load('https://raw.githubusercontent.com/RishavMz/3D_Battle_Arena/main/client/resources/player_metal.png');
       
-
-//const sword_image = texture.load('https://raw.githubusercontent.com/RishavMz/3D_Battle_Arena/main/client/resources/sword_hand.png');
-//const bark_image = texture.load('https://raw.githubusercontent.com/RishavMz/3D_Battle_Arena/main/client/resources/tree_bark.png');
+const bark_image = texture.load('https://raw.githubusercontent.com/RishavMz/3D_Battle_Arena/main/client/resources/tree_bark.png');
 
 class Sword{
   constructor(){
-    //this.tool = new THREE.Mesh(new THREE.CylinderGeometry(0.5, 0, 10, 100 ), new THREE.MeshBasicMaterial({map: sword_image}));
+    this.tool = new THREE.Mesh(new THREE.CylinderGeometry(0.5, 0, 10, 100 ), new THREE.MeshBasicMaterial({map: metal_img}));
     this.range = 14;
-    this.holder = -5;
-    //this.tool.position.y = -0.8;
-    //this.tool.position.z = this.holder;
-    //this.tool.position.x = 4.5;
-    //this.tool.rotation.x = THREE.Math.degToRad(90);
-    //this.direction = 1; // 0-> north ; 1-> east ; 2-> south ; 2-> west
-    //this.bullet = 0;
+    this.holder = 5;
+    this.tool.position.y = -0.8;
+    this.tool.position.z = this.holder;
+    this.tool.position.x = -4.5;
+    this.tool.rotation.x = THREE.Math.degToRad(90);
+    this.tool.rotation.z += THREE.Math.degToRad(180);
   }
 }
 class Axe{
   constructor(){
-    //const handle = new THREE.Mesh(new THREE.CylinderGeometry(0.2, 0.2, 10, 100 ), new THREE.MeshBasicMaterial({map: bark_image}));
-    //const head = new THREE.Mesh(new THREE.SphereGeometry(2, 50, 50 ), new THREE.MeshBasicMaterial({map: sword_image}));
-    //head.position.z = 0;
-    //head.position.y = -4;
-    //this.tool = new THREE.Group();
-    //this.tool.add(handle, head);
+    const handle = new THREE.Mesh(new THREE.CylinderGeometry(0.2, 0.2, 10, 100 ), new THREE.MeshBasicMaterial({map: bark_image}));
+    const head = new THREE.Mesh(new THREE.SphereGeometry(2, 50, 50 ), new THREE.MeshBasicMaterial({map: metal_img}));
+    head.position.z = 0;
+    head.position.y = -4;
+    this.tool = new THREE.Group();
+    this.tool.add(handle, head);
     this.range = 17
-    this.holder = -6;
-    //this.tool.position.y += -0.8;
-    //this.tool.position.z += this.holder;
-    //this.tool.position.x += 4.5;
-    //this.tool.rotation.x += THREE.Math.degToRad(90);
+    this.holder = 6;
+    this.tool.position.y += -0.8;
+    this.tool.position.z += this.holder;
+    this.tool.position.x += -4.5;
+    this.tool.rotation.x += THREE.Math.degToRad(90);
+    this.tool.rotation.z += THREE.Math.degToRad(180);
+
   }
 }
 class Polearm{
   constructor(){
-    //this.tool = new THREE.Mesh(new THREE.CylinderGeometry(0.5, 0.2, 20, 100 ), new THREE.MeshBasicMaterial({map: bark_image}));
+    this.tool = new THREE.Mesh(new THREE.CylinderGeometry(0.5, 0.2, 20, 100 ), new THREE.MeshBasicMaterial({map: bark_image}));
     this.range = 20;
-    this.holder = -8;
-    //this.tool.position.y = -0.8;
-    //this.tool.position.z = this.holder;
-    //this.tool.position.x = 4.5;
-    //this.tool.rotation.x = THREE.Math.degToRad(90);
+    this.holder = 8;
+    this.tool.position.y = -0.8;
+    this.tool.position.z = this.holder;
+    this.tool.position.x = -4.5;
+    this.tool.rotation.x = THREE.Math.degToRad(90);
+    this.tool.rotation.z += THREE.Math.degToRad(180);
   }
 }
 
@@ -153,8 +153,9 @@ export class Player {
       leg2.rotation.x = 0.5;
       neck.position.y = 1;
       head.position.y = 4;
+      this.holderweaponhand = this.weapons[this.weapon].tool;
       this.player = new THREE.Group();
-      this.player.add(head, body, neck, hand1, hand2, skirt, leg1, leg2, chestGuard, waistGuard, headGuard);
+      this.player.add(head, body, neck, hand1, hand2, skirt, leg1, leg2, chestGuard, waistGuard, headGuard, this.holderweaponhand);
       this.player.position.x = this.posx;
       this.player.position.z = this.posz;
       this.player.rotation.y = THREE.Math.degToRad(180);
@@ -184,9 +185,8 @@ export class Player {
     this.player.position.z = this.posz;
     this.playerrange.position.x = this.posx;
     this.playerrange.position.z = this.posz;
-    //this.weapons.forEach(e => { e.tool.position.x += this.posx; e.tool.position.z += this.posz; })
-    this.scene.position.z -= this.posz;
-    this.scene.position.x -= this.posx;
+    this.scene.position.z = -this.posz;
+    this.scene.position.x = -this.posx;
   }
   multiplayerdraw() {
     this.player.position.x = this.posx;
@@ -196,12 +196,7 @@ export class Player {
   }
   forward(velz, velx) {
     this.velz = velz;
-    this.velx = velx;
-    //this.weapons.forEach(e => { 
-    //  e.tool.rotation.z = THREE.Math.degToRad(0);
-    //  e.tool.position.x = this.player.position.x + 4.5;
-    //  e.tool.position.z = this.player.position.z + this.weapons[this.weapon].holder;
-    //});    
+    this.velx = velx;    
   }
 
   move() {
@@ -231,11 +226,12 @@ export class Player {
     return this.quadtree.squareContains(this.posx, this.posz, this.range, []);
   }
   changeWeapon(data) {
+    this.player.remove(this.weapons[this.weapon].tool);
     this.weapon = (this.weapon+data)%this.weapons.length;
     if(this.weapon<0){
       this.weapon = this.weapons.length+this.weapon;
     }
-    //console.log(this.weapon);
+    this.player.add(this.weapons[this.weapon].tool);
   }
   multiplayermove(posx, posz) {
     this.newposx = posx;
