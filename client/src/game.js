@@ -59,6 +59,7 @@ export class Game{
     //this.gridHelper = new THREE.GridHelper(1000,1000);
     //this.scene.add(gridHelper); 
     this.controls = new OrbitControls(this.camera, this.renderer.domElement);
+    this.controls.enableZoom = false;
     this.nearby = [];
     this.weaponmove = 0;
     this.pointanimate = 0;
