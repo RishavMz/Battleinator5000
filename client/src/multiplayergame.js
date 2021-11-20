@@ -61,6 +61,7 @@ export class Multiplayer{
 
     this.chunk = new Chunk(this.scene, 0, 0, 1024, this.texture, 10);
     this.chunk.draw();
+    this.chunk.drawObjects();
     this.player = new Player(this.scene, this.qtree, this.chunk, this.username, Math.random()*1024 - 512, Math.random()*1024 - 512, this.texture);
     //this.scene.add(this.player.weapons[0].tool);
     this.player.draw();
@@ -117,6 +118,7 @@ export class Multiplayer{
 
   animate() {
     requestAnimationFrame(this.animate);
+    this.chunk.water.rotation.z += 0.001;
     this.pointanimate%=100000;
     if(this.pointanimate%5 == 0 && this.player.walking == 1){
       this.player.leg1.rotation.x = (this.player.leg1.rotation.x+0.1)%0.6;
