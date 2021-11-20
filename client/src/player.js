@@ -63,7 +63,7 @@ export class Bullet {
     this.velx = 0;
     this.vely = 1;
     this.velz = 0;
-    this.data = new THREE.Mesh(new THREE.SphereGeometry(2, 10, 10), new THREE.MeshBasicMaterial({color: 0xffffff}));
+    this.data = new THREE.Mesh(new THREE.SphereBufferGeometry(2, 10, 10), new THREE.MeshBasicMaterial({color: 0xffffff}));
     this.data.position.x = this.posx;
     this.data.position.y = this.posy;
     this.data.position.z = this.posz;
@@ -120,17 +120,17 @@ export class Player {
     this.bullet = new Bullet(this.scene, this.posx, 20, this.posz);
     this.bulletloaded = 1;
     
-      const head = new THREE.Mesh(new THREE.SphereGeometry(1.5, this.texture, this.texture), new THREE.MeshBasicMaterial({map: head_img}));
-      const body = new THREE.Mesh(new THREE.CylinderGeometry(2, 1, 5, this.texture,this.texture, false), new THREE.MeshBasicMaterial({map: body_img}));
-      const neck = new THREE.Mesh(new THREE.SphereGeometry(2, this.texture,this.texture,0, 72, 0, 1), new THREE.MeshBasicMaterial({map: head_img}));
-      const hand1 = new THREE.Mesh(new THREE.CylinderGeometry(0.5, 0.3, 4, this.texture,this.texture, false), new THREE.MeshBasicMaterial({map: limb_img}));
-      const hand2 = new THREE.Mesh(new THREE.CylinderGeometry(0.5, 0.3, 4, this.texture,this.texture, false), new THREE.MeshBasicMaterial({map: limb_img}));
-      const skirt = new THREE.Mesh(new THREE.CylinderGeometry(1, 1.8, 3, this.texture,this.texture, false), new THREE.MeshBasicMaterial( {map: metal_img}));
-      const leg1 = new THREE.Mesh(new THREE.CylinderGeometry(0.5, 0.3, 5, this.texture,this.texture, false), new THREE.MeshBasicMaterial({map: metal_img}));
-      const leg2 = new THREE.Mesh(new THREE.CylinderGeometry(0.5, 0.3, 5, this.texture,this.texture, false), new THREE.MeshBasicMaterial({map: metal_img}));
-      const chestGuard = new THREE.Mesh(new THREE.TorusGeometry(1.8, 0.8, this.texture,this.texture,this.texture), new THREE.MeshBasicMaterial({map: metal_img}));
-      const waistGuard = new THREE.Mesh(new THREE.TorusGeometry(0.8, 0.8, this.texture,this.texture,this.texture), new THREE.MeshBasicMaterial({map: metal_img}));
-      const headGuard = new THREE.Mesh(new THREE.TorusGeometry(0.8, 0.8, this.texture,this.texture,this.texture), new THREE.MeshBasicMaterial({map: metal_img}));
+      const head = new THREE.Mesh(new THREE.SphereBufferGeometry(1.5, this.texture, this.texture), new THREE.MeshBasicMaterial({map: head_img}));
+      const body = new THREE.Mesh(new THREE.CylinderBufferGeometry(2, 1, 5, this.texture,this.texture, false), new THREE.MeshBasicMaterial({map: body_img}));
+      const neck = new THREE.Mesh(new THREE.SphereBufferGeometry(2, this.texture,this.texture,0, 72, 0, 1), new THREE.MeshBasicMaterial({map: head_img}));
+      const hand1 = new THREE.Mesh(new THREE.CylinderBufferGeometry(0.5, 0.3, 4, this.texture,this.texture, false), new THREE.MeshBasicMaterial({map: limb_img}));
+      const hand2 = new THREE.Mesh(new THREE.CylinderBufferGeometry(0.5, 0.3, 4, this.texture,this.texture, false), new THREE.MeshBasicMaterial({map: limb_img}));
+      const skirt = new THREE.Mesh(new THREE.CylinderBufferGeometry(1, 1.8, 3, this.texture,this.texture, false), new THREE.MeshBasicMaterial( {map: metal_img}));
+      const leg1 = new THREE.Mesh(new THREE.CylinderBufferGeometry(0.5, 0.3, 5, this.texture,this.texture, false), new THREE.MeshBasicMaterial({map: metal_img}));
+      const leg2 = new THREE.Mesh(new THREE.CylinderBufferGeometry(0.5, 0.3, 5, this.texture,this.texture, false), new THREE.MeshBasicMaterial({map: metal_img}));
+      const chestGuard = new THREE.Mesh(new THREE.TorusBufferGeometry(1.8, 0.8, this.texture,this.texture,this.texture), new THREE.MeshBasicMaterial({map: metal_img}));
+      const waistGuard = new THREE.Mesh(new THREE.TorusBufferGeometry(0.8, 0.8, this.texture,this.texture,this.texture), new THREE.MeshBasicMaterial({map: metal_img}));
+      const headGuard = new THREE.Mesh(new THREE.TorusBufferGeometry(0.8, 0.8, this.texture,this.texture,this.texture), new THREE.MeshBasicMaterial({map: metal_img}));
       chestGuard.position.y += 2;
       waistGuard.position.y -= 1;
       headGuard.position.y += 5;
@@ -176,7 +176,7 @@ export class Player {
         this.scene.add(this.player);
       })
 
-    this.playerrange = new THREE.Mesh(new THREE.BoxGeometry(this.range, 10, this.range, 5, 5, 5), new THREE.MeshBasicMaterial({color: 0x7bff00, wireframe: true}));
+    this.playerrange = new THREE.Mesh(new THREE.BoxBufferGeometry(this.range, 10, this.range, 5, 5, 5), new THREE.MeshBasicMaterial({color: 0x7bff00, wireframe: true}));
 
   }
   draw() {

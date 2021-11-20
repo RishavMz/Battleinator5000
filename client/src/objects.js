@@ -12,7 +12,7 @@ export class Grass{
         this.texture = texture;
     }
     draw(){
-        this.top  = new THREE.Mesh( new THREE.SphereGeometry( 12, 10, 10, this.texture,this.texture,this.texture,this.texture), new THREE.MeshBasicMaterial( {map: bush_image} ) );
+        this.top  = new THREE.Mesh( new THREE.SphereBufferGeometry( 12, 10, 10, this.texture,this.texture,this.texture,this.texture), new THREE.MeshBasicMaterial( {map: bush_image} ) );
         this.top.position.y -= 9.2;
         this.data = new THREE.Group();
         this.data.add(this.top);
@@ -30,12 +30,12 @@ export class Tree{
       this.texture = texture;
     }
     draw() {
-      this.bark    = new THREE.Mesh( new THREE.CylinderGeometry( 1.6, 1.6, 16 ), new THREE.MeshBasicMaterial( {map: bark_image} ) );
-      this.top  = new THREE.Mesh( new THREE.SphereGeometry( 8, 10, 10, this.texture,this.texture,this.texture,this.texture), new THREE.MeshBasicMaterial( {map: canopy_image} ) );
-      this.top1 = new THREE.Mesh( new THREE.SphereGeometry( 8, 10, 10, this.texture,this.texture,this.texture,this.texture), new THREE.MeshBasicMaterial( {map: canopy_image} ) );
-      this.top2 = new THREE.Mesh( new THREE.SphereGeometry( 8, 10, 10, this.texture,this.texture,this.texture,this.texture), new THREE.MeshBasicMaterial( {map: canopy_image} ) );
-      this.top3 = new THREE.Mesh( new THREE.SphereGeometry( 8, 10, 10, this.texture,this.texture,this.texture,this.texture), new THREE.MeshBasicMaterial( {map: canopy_image} ) );
-      this.top4 = new THREE.Mesh( new THREE.SphereGeometry( 8, 10, 10, this.texture,this.texture,this.texture,this.texture), new THREE.MeshBasicMaterial( {map: canopy_image} ) );
+      this.bark    = new THREE.Mesh( new THREE.CylinderBufferGeometry( 1.6, 1.6, 16 ), new THREE.MeshBasicMaterial( {map: bark_image} ) );
+      this.top  = new THREE.Mesh( new THREE.SphereBufferGeometry( 8, 10, 10, this.texture,this.texture,this.texture,this.texture), new THREE.MeshBasicMaterial( {map: canopy_image} ) );
+      this.top1 = new THREE.Mesh( new THREE.SphereBufferGeometry( 8, 10, 10, this.texture,this.texture,this.texture,this.texture), new THREE.MeshBasicMaterial( {map: canopy_image} ) );
+      this.top2 = new THREE.Mesh( new THREE.SphereBufferGeometry( 8, 10, 10, this.texture,this.texture,this.texture,this.texture), new THREE.MeshBasicMaterial( {map: canopy_image} ) );
+      this.top3 = new THREE.Mesh( new THREE.SphereBufferGeometry( 8, 10, 10, this.texture,this.texture,this.texture,this.texture), new THREE.MeshBasicMaterial( {map: canopy_image} ) );
+      this.top4 = new THREE.Mesh( new THREE.SphereBufferGeometry( 8, 10, 10, this.texture,this.texture,this.texture,this.texture), new THREE.MeshBasicMaterial( {map: canopy_image} ) );
       this.top.position.y += 11.2;
       this.top1.position.x += 2;
       this.top2.position.x -= 2;

@@ -29,8 +29,8 @@ export class Chunk {
         const ground = new THREE.Mesh( geometry, new THREE.MeshBasicMaterial( { map: ground_image } ) );
         ground.rotation.x = THREE.Math.degToRad(-90);
         
-        const ground1 = new THREE.Mesh(new THREE.PlaneGeometry(2048, 2048), new THREE.MeshBasicMaterial({map: ground_image1}));
-        const sky = new THREE.Mesh(new THREE.SphereGeometry(this.side/1.414, this.side, this.side), new THREE.MeshBasicMaterial({map: sky_image}));
+        const ground1 = new THREE.Mesh(new THREE.PlaneBufferGeometry(2048, 2048), new THREE.MeshBasicMaterial({map: ground_image1}));
+        const sky = new THREE.Mesh(new THREE.SphereBufferGeometry(this.side/1.414, this.side, this.side), new THREE.MeshBasicMaterial({map: sky_image}));
         this.ground = ground;
         this.water = ground1;
         ground1.position.y = -12;
