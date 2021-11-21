@@ -10,6 +10,21 @@
 </ul>
 </details>
 
-# Client :
+# Client Structure:
 
 <img src='./assets/client.png'/>
+<br/><br/>
+<br/><br/>
+
+# Screenshots:
+
+## Singleplayer
+
+<img src='./assets/singleplayer.png'/>
+<br/><br/>
+<br/><br/>
+
+
+## Multiplayer
+
+<img src='./assets/multiplayer.png'/>
