@@ -35,6 +35,15 @@ export class Multiplayer{
               <br/>
               PRESS ANY KEY TO START
             </div>
+            <div class="chat">
+              <div class="chatsend" id="chatsend">
+                <div class="messages" id="messages"></div>
+                <form id="messageform">
+                <input type="text" id="chatmessage"/>
+                <button type="submit" id="chatsender">SEND</button>
+                <form>
+              </div>
+            </div>
             <canvas id="main"></canvas>`;
 
     this.scene = new THREE.Scene();
@@ -65,13 +74,20 @@ export class Multiplayer{
     this.player = new Player(this.scene, this.qtree, this.chunk, this.username, Math.random()*1024 - 512, Math.random()*1024 - 512, this.texture);
     //this.scene.add(this.player.weapons[0].tool);
     this.player.draw();
-    this.socket.emit('joined', {id: this.player.id, username: this.player.username, posx: this.player.posx, posz: this.player.posz});
+    this.socket.emit('joined', {id: this.player.id, username: this.player.username, posx: this.player.posx, posz: this.player.posz, health: this.player.health});
     this.playermap[this.player.id] = this.player;
     document.getElementById('label1').innerHTML= `SCORE : ${this.player.score} <br/> HEALTH : ${this.player.health}` ;
 
     document.addEventListener("keydown", this.onDocumentKeyDown, false);
     document.addEventListener("keyup", this.onDocumentKeyUp, false);
-
+    document.getElementById('messageform').onsubmit= (e)=>{
+      e.preventDefault();
+      const message = document.getElementById('chatmessage').value;
+      if(message.length >0 ){
+        this.socket.emit('chatmessage', {sender: this.player.username, message: message});
+      }
+      document.getElementById('chatmessage').value = "";
+    }
 
     let stateCheck = setInterval(() => { 
       if (document. readyState === 'complete') {
@@ -113,7 +129,14 @@ export class Multiplayer{
                 }
             });
         }
-      });     
+      });
+      this.socket.on('chatmessage', (data)=> {
+        let st = "";
+        for(let i=0; i<data.length; i++){
+          st = st + `<b>${data[i][0]}</b> : ${data[i][1]}<br/>`;
+        }
+        document.getElementById('messages').innerHTML = st;
+      })     
   }
 
   animate() {

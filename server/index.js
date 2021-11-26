@@ -11,35 +11,9 @@ app.get('/', (req, res) => {
     res.send("Its working");
 });
 
-const points = [];
-const trees = [];
-const bush = [];
-const ENEMY_COUNT = 10;
-const OBSTACLE_COUNT = 10;
-for(let i=0; i<ENEMY_COUNT; i++){
-    points.push({
-        id: i,
-        posx: Math.random()*1024 - 512, 
-        posz: Math.random()*1024 - 512
-    });
-}
-for(let i=0; i<OBSTACLE_COUNT; i++){
-    trees.push({
-        id: i,
-        posx: Math.random()*1024 - 512, 
-        posz: Math.random()*1024 - 512
-    });
-}
-for(let i=0; i<OBSTACLE_COUNT; i++){
-    bush.push({
-        id: i,
-        posx: Math.random()*1024 - 512, 
-        posz: Math.random()*1024 - 512
-    });
-}
-
 const players = {};
 players['id'] = [];
+const chat = [];
 
 io.on('connection', async(socket) => {
     console.log('A user '+ socket.handshake.auth.username +' connected with email ID ', socket.handshake.auth.email);
@@ -53,12 +27,17 @@ io.on('connection', async(socket) => {
             players[val.id].posx = val.posx;
             players[val.id].posz = val.posz;
         });
+        socket.on('chatmessage', (data)=> {
+            if(chat.length >= 5){    chat.shift();  }
+            chat.push([data.sender, data.message]);
+            io.emit(chat);
+        })
     });
 });
 
 setInterval(()=>{
     io.emit('players', players);
-    console.log(players)
+    io.emit('chatmessage', chat);
 }, 1000);
 
 server.listen(PORT, () => {

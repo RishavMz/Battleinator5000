@@ -127,3 +127,45 @@
   width: 98vw;
   margin-top: 0px;
 }
+.chat{
+  position: fixed;
+  bottom:  0px;
+  left: 0px;
+  height: 200px;
+  width: 300px;
+  z-index: 12;
+}
+
+.chatsend{
+  position: fixed;
+  bottom:  0px;
+  left: 0px;
+}
+#chatmessage{
+  height: 25px;
+  width: 400px;
+}
+.messages{
+  overflow:hidden;
+  height: 120px;
+  width: 400px;
+  font-size: 14pt;
+  margin-left: 10px;
+  color: white;
+  text-shadow: black 0px 0px 10px;
+}
+#chatsender{
+  padding: 8px 8px 8px 8px;
+  font-weight: bold;
+  color: white;
+  background-color: rgb(52, 134, 52);
+  outline: none;
+  border: none;
+}
+#chatmessage{
+  color: white;
+  font-weight: bold;
+  background: transparent;
+  border: 2px dotted white;
+  text-align: right;
+}
