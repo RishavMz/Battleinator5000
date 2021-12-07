@@ -1,49 +1,85 @@
-# Client to server
+# Local Setup
 
-## 'joined'
+Clone the repository into a directory and run the following to install the dependancies:
+```
+npm install
+```
+
+Run the following command to start server:
+```
+npm run dev
+```
+#
+
+# DOCUMENTATION
+
+## Client to server
+
+### 'joined'
 
 ```
 {
-    id,
-    posx, 
-    posz
+    id  :   Integer,
+    posx:   Integer, 
+    posz:   Integer
 }
 ```
 
-## 'move'
+### 'move'
 
 ```
 {
-    id,
-    posx, 
-    posz
+    id  :   Integer,
+    posx:   Integer, 
+    posz:   Integer
 }
 ```
 
-
-
-# Server to clients
-
-## 'joined'
+### 'chatmessage'
 
 ```
 {
-    id,
-    posx, 
-    posz
+    sender  :   String,
+    message :   String
 }
 ```
 
 
-## 'players'
 
-Runs every second
+## Server to clients
+
+### 'joined'
+
+```
+{
+    id  :   Integer,
+    posx:   Integer, 
+    posz:   Integer
+}
+```
+
+
+### 'players'
+
+>Runs every second
 ```
 [
     {
-        id,
-        posx, 
-        posz
+        id  :   Integer,
+        posx:   Integer, 
+        posz:   Integer
     }
 ]
+
+```
+### 'chatmessage'
+
+>Runs every second
+```
+{
+    [
+        sender  :   String,
+        message :   String
+    ]
+}
 ```

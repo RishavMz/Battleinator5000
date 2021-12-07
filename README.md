@@ -8,11 +8,18 @@
     <li>Singleplayer  : Destroy endless spawning bots until you run out of health.</li>
     <li>Multiplayer   : Compete with real players in a free for all battle .</li>
 </ul>
+<br/><br/><br/>
 </details>
 
 # Client Structure:
 
 <img src='./assets/client.png'/>
+<br/><br/>
+<br/><br/>
+
+# Server Structure:
+
+<img src='./assets/server.png'/>
 <br/><br/>
 <br/><br/>
 
