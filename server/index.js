@@ -16,7 +16,7 @@ players['id'] = [];
 const chat = [];
 
 io.on('connection', async(socket) => {
-    console.log('A user '+ socket.handshake.auth.username +' connected with email ID ', socket.handshake.auth.email);
+    console.log('A user '+ socket.handshake.auth.username+ 'just connected');
 
     socket.on('joined', (data)=>{
         players[data.id] = data;

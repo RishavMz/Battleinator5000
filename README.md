@@ -13,13 +13,13 @@
 
 # Client Structure:
 
-<img src='./assets/client.png'/>
+<img src='./assets/client.jpg'/>
 <br/><br/>
 <br/><br/>
 
 # Server Structure:
 
-<img src='./assets/server.png'/>
+<img src='./assets/server.jpg'/>
 <br/><br/>
 <br/><br/>
 

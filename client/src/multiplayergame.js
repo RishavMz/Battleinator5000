@@ -9,15 +9,14 @@ import { Tree, Grass } from './objects';
 const BACKEND = "ws://127.0.0.1:5000";
 
 export class Multiplayer{
-  constructor(email, username, texture){
+  constructor( username, texture){
     alert('Backend server is on sick leave, hence we are unable to serve multiplayer environment now. Feel lonely here? You can still enjoy the single player mode ;)')
-    this.email = email;
     this.username = username;
     this.animate = this.animate.bind(this);
     this.onDocumentKeyDown = this.onDocumentKeyDown.bind(this);
     this.backend = BACKEND;
     this.texture = texture;
-    this.socket = io(this.backend, { reconnectionDelayMax: 10000, auth: { email: this.email , username: this.username }});
+    this.socket = io(this.backend, { reconnectionDelayMax: 10000, auth: { username: this.username }});
 
 
     document.getElementById('root').innerHTML = `

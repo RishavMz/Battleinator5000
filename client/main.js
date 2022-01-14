@@ -6,17 +6,15 @@ import './style.css'
 document.getElementById('root').innerHTML = `<div class="menu">
     <br/><br/><br/>
     <center><form class="login" id="loginform">
-        <label>USERNAME</label><br/>
+        <label><b>USERNAME</b></label><br/>
         <input type="text" class="input" name="username" id="username" required/><br/><br/>
-        <label>EMAIL</label><br/>
-        <input type="email" class="input" name="email" id="email" required/><br/><br/>
-        <label>GameMode </label>
+        <label><b>GameMode </b></label>
         <select class="gamemode" name="gamemode" id="gamemode">
             <option value="singleplayer">Singleplayer</option>
             <option value="multiplayer">Multiplayer</option>
         </select>
         <br/><br/>
-        <label>Graphics </label>
+        <label><b>Graphics </b></label>
         <select class="gamemode" name="texture" id="texture">
             <option value="1">HIGH</option>
             <option value="0">LOW</option>
@@ -29,7 +27,6 @@ document.getElementById('root').innerHTML = `<div class="menu">
 document.getElementById('loginform').onsubmit= (e)=>{
     e.preventDefault();
     const username = document.getElementById('username').value;
-    const email = document.getElementById('email').value;
     const gamemode = document.getElementById('gamemode').value;
     const texture = (document.getElementById('texture').value === '1'?100:10);
     document.getElementById('root').innerHTML = `<div class="loader" id='loader'>
@@ -39,10 +36,10 @@ document.getElementById('loginform').onsubmit= (e)=>{
     </div>`;
     var game;
     if(gamemode === 'singleplayer'){
-        game = new Game(email, username, texture);
+        game = new Game(username, texture);
         game.animate();
     } else {
-        game = new Multiplayer(email, username, texture);
+        game = new Multiplayer(username, texture);
         game.animate();
     }
 

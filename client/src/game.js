@@ -10,8 +10,7 @@ import { Tree, Grass } from './objects';
 const BACKEND = "ws://127.0.0.1:5000";
 
 export class Game{
-  constructor(email, username, texture){
-    this.email = email;
+  constructor(username, texture){
     this.username = username;
     this.texture = texture;
     this.animate = this.animate.bind(this);
