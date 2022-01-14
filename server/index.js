@@ -15,44 +15,11 @@ const players = {};
 players['id'] = [];
 const chat = [];
 var socks = [];
-const TTL = 30;
+const TTL = 10;
 var numClients=0;
+var interv;
 
-io.on('connection', async(socket) => {
-    console.log('A user '+ socket.handshake.auth.username+ 'just connected');
-    socks.push([socket,TTL])
-    socket.on('joined', (data)=>{
-        numClients++;
-        players[data.id] = data;
-        players['id'].push(data);
-        console.log("Joined as :",data);
-        io.emit('joined', data);
-        socket.on('move', (val)=>{
-            players[val.id].posx = val.posx;
-            players[val.id].posz = val.posz;
-        });
-        socket.on('chatmessage', (data)=> {
-            if(chat.length >= 5){    chat.shift();  }
-            chat.push([data.sender, data.message]);
-            io.emit(chat);
-        })
-        socket.on('heartbeat', ()=>{
-            for(let i=0; i<socks.length; i++){
-                if(socks[i][0]==socket){
-                    socks[i][1]=30;
-                    break;
-                }
-            }
-        })
-        socket.on('disconnect', function () {
-            numClients--;
-       });
-    });
-});
-
-
-
-setInterval(()=>{
+function timer(){
     if(numClients>0){
         io.emit('players', players);
         io.emit('chatmessage', chat);
@@ -70,7 +37,49 @@ setInterval(()=>{
         //console.log(numClients);
        socks = rem;
     }
-}, 1000);
+    else {
+        clearInterval(interv);
+    }
+    console.log("Here"+numClients)
+}
+
+io.on('connection', async(socket) => {
+    console.log('A user '+ socket.handshake.auth.username+ 'just connected');
+    socks.push([socket,TTL])
+    socket.on('joined', (data)=>{
+        if(numClients===0){
+            interv = setInterval(timer, 1000);
+        }
+        numClients++;
+        players[data.id] = data;
+        players['id'].push(data);
+        console.log("Joined as :",data);
+        io.emit('joined', data);
+        socket.on('move', (val)=>{
+            players[val.id].posx = val.posx;
+            players[val.id].posz = val.posz;
+        });
+        socket.on('chatmessage', (data)=> {
+            if(chat.length >= 5){    chat.shift();  }
+            chat.push([data.sender, data.message]);
+            io.emit(chat);
+        })
+        socket.on('heartbeat', ()=>{
+            for(let i=0; i<socks.length; i++){
+                if(socks[i][0]==socket){
+                    socks[i][1]=TTL;
+                    break;
+                }
+            }
+        })
+        socket.on('disconnect', function (data) {
+            numClients--;
+            delete players[data.id];
+       });
+    });
+});
+
+
 
 server.listen(PORT, () => {
     console.log('Server is up and listening on port ',PORT);
