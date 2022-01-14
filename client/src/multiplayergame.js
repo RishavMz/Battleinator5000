@@ -135,6 +135,10 @@ export class Multiplayer{
           st = st + `<b>${data[i][0]}</b> : ${data[i][1]}<br/>`;
         }
         document.getElementById('messages').innerHTML = st;
+      }) 
+      this.socket.on('disconnected', (data)=> {
+        alert("You have been disconnected for a period of inactivity.");
+        location.reload();
       })     
   }
 
@@ -174,6 +178,7 @@ export class Multiplayer{
 
   onDocumentKeyDown(event) {
     var keyCode = event.which;
+    this.socket.emit('heartbeat',{});
     //console.log(keyCode)
   if (keyCode == 87 ) { 
     this.player.forward(this.player.acc*Math.sin(this.angle),this.player.acc* Math.cos(-this.angle));     
