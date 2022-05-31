@@ -38,6 +38,8 @@ document.getElementById('loginform').onsubmit= (e)=>{
     if(gamemode === 'singleplayer'){
         game = new Game(username, texture);
         game.animate();
+        game.bulletAnimate();
+        game.playerAnimate();
     } else {
         game = new Multiplayer(username, texture);
         game.animate();
