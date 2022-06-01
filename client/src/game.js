@@ -6,7 +6,7 @@ import { Chunk } from "./chunk";
 import { Player } from "./player";
 import { Point, QuadTree } from "./quadtree";
 
-const BACKEND = "ws://127.0.0.1:5000";
+const BACKEND = "https://battleinator5000.vercel.app";
 
 export class Game {
   constructor(username, texture) {

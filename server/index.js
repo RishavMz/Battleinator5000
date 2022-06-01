@@ -3,7 +3,7 @@ const app = express();
 const http = require('http');
 const server = http.createServer(app);
 const { Server } = require("socket.io");
-const io = new Server(server, { cors: { origin: '*:*' } });
+const io = new Server(server, { cors: { origin: "https://battleinator5000.netlify.app" } });
 
 const PORT = 8000;
 
