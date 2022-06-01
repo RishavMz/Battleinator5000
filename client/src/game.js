@@ -69,7 +69,7 @@ export class Game {
     this.nearby = [];
     this.weaponmove = 0;
     this.pointanimate = 0;
-    this.ENV = "dev";
+    this.ENV = "prod";
     this.ENEMY_COUNT = 5;
     this.radius = 25;
     this.angle = 1.3;

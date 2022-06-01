@@ -3,12 +3,12 @@ const app = express();
 const http = require('http');
 const server = http.createServer(app);
 const { Server } = require("socket.io");
-const io = new Server(server, { cors: { origin: '*' } });
+const io = new Server(server, { cors: { origin: '*:*' } });
 
 const PORT = 8000;
 
 app.get('/', (req, res) => {
-    res.send("Its working");
+    res.send("Server is up and running, probably");
 });
 
 const players = {};
